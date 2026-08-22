@@ -4,6 +4,8 @@ import { Container } from '@/components/ui/Container'
 import { StrengthCard } from './StrengthCard'
 import { Users, Trophy, Handshake, Calendar } from 'lucide-react'
 
+import { FadeIn } from '@/components/ui/FadeIn'
+
 export interface StrengthsSectionProps {
   strengths?: Array<{
     title?: string
@@ -50,22 +52,25 @@ export function StrengthsSection({ strengths }: StrengthsSectionProps) {
   return (
     <Section variant="dark-gray">
       <Container>
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-8 h-1 bg-primary"></div>
-          <span className="font-bold text-sm uppercase tracking-widest text-white">What We Do</span>
-        </div>
-        <h2 className="text-4xl md:text-5xl font-heading font-black mb-16 text-white">
-          OUR CORE STRENGTHS
-        </h2>
+        <FadeIn direction="up" delay={0.1}>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-8 h-1 bg-primary"></div>
+            <span className="font-bold text-sm uppercase tracking-widest text-white">What We Do</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-heading font-black mb-16 text-white">
+            OUR CORE STRENGTHS
+          </h2>
+        </FadeIn>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {items.slice(0, 3).map((item, idx) => (
-            <StrengthCard 
-              key={idx}
-              title={item.title || ''}
-              description={item.description || ''}
-              icon={getIcon(item.icon)} 
-            />
+            <FadeIn key={idx} direction="up" delay={0.15 * (idx + 1)}>
+              <StrengthCard 
+                title={item.title || ''}
+                description={item.description || ''}
+                icon={getIcon(item.icon)} 
+              />
+            </FadeIn>
           ))}
         </div>
       </Container>

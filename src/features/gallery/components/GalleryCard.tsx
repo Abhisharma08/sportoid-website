@@ -6,22 +6,26 @@ export interface GalleryCardProps {
   imageSrc?: string
 }
 
+import { FadeIn } from '@/components/ui/FadeIn'
+
 export function GalleryCard({ title, year, imageSrc }: GalleryCardProps) {
   return (
-    <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
-      <div className="w-48 h-48 rounded-full overflow-hidden border border-gray-100 mb-8 p-4 bg-white flex items-center justify-center">
-        {imageSrc ? (
-          <img src={imageSrc} alt={title} className="max-w-full max-h-full object-contain" />
-        ) : (
-          <div className="w-full h-full bg-gray-100 rounded-full"></div>
-        )}
+    <FadeIn direction="up" delay={0.1}>
+      <div className="bg-white rounded-lg p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center group cursor-pointer">
+        <div className="w-48 h-48 rounded-full overflow-hidden border border-gray-100 mb-8 p-4 bg-white flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+          {imageSrc ? (
+            <img src={imageSrc} alt={title} className="max-w-full max-h-full object-contain" />
+          ) : (
+            <div className="w-full h-full bg-gray-100 rounded-full"></div>
+          )}
+        </div>
+        
+        <div className="w-full text-left">
+          <div className="w-12 h-1 bg-primary mb-4 transition-all duration-300 group-hover:w-20"></div>
+          <h3 className="text-lg font-heading font-bold text-dark mb-2 leading-snug group-hover:text-primary transition-colors">{title}</h3>
+          <div className="text-gray-500 text-sm">{year}</div>
+        </div>
       </div>
-      
-      <div className="w-full text-left">
-        <div className="w-12 h-1 bg-primary mb-4"></div>
-        <h3 className="text-lg font-heading font-bold text-dark mb-2 leading-snug">{title}</h3>
-        <div className="text-gray-500 text-sm">{year}</div>
-      </div>
-    </div>
+    </FadeIn>
   )
 }
