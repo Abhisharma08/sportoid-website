@@ -240,21 +240,16 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
+                aria-label="Subscribe to Newsletter"
                 className="absolute right-0 top-0 bottom-0 bg-primary px-4 rounded-r-md flex items-center justify-center hover:bg-red-700 transition-colors disabled:opacity-50"
               >
                 <svg
-                  className="w-4 h-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
+                  className="w-4 h-4 text-white transform rotate-0"
                   viewBox="0 0 24 24"
+                  fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                 </svg>
               </button>
             </form>
