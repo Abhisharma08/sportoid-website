@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Container } from '../../ui/Container'
 import { urlFor } from '@/sanity/image'
 import { Menu, X } from 'lucide-react'
@@ -21,12 +22,20 @@ const DEFAULT_NAV = [
 ]
 
 export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   const siteTitle = settings?.siteTitle || 'SPORTOID'
   const logoUrl = settings?.logo ? urlFor(settings.logo).height(50).url() : null
   const navItems = navigation?.items && navigation.items.length > 0 ? navigation.items : DEFAULT_NAV
   const ctaButton = navigation?.ctaButton
+
+  const isLinkActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(href)
+  }
 
   // Close mobile menu on page navigation or resize
   React.useEffect(() => {
@@ -55,16 +64,18 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8 h-full">
             {navItems.map((item: any, idx: number) => {
               const isExternal = item.isExternal || item.href.startsWith('http')
+              const active = !isExternal && isLinkActive(item.href)
+
               return isExternal ? (
                 <a
                   key={idx}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider"
+                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider h-full flex items-center"
                 >
                   {item.label}
                 </a>
@@ -72,9 +83,14 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                 <Link
                   key={idx}
                   href={item.href}
-                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider"
+                  className={`font-bold text-sm transition-colors uppercase tracking-wider h-full flex items-center relative ${
+                    active ? 'text-primary' : 'text-dark hover:text-primary'
+                  }`}
                 >
                   {item.label}
+                  {active && (
+                    <span className="absolute bottom-0 inset-x-0 h-0.5 bg-primary rounded-t-sm" />
+                  )}
                 </Link>
               )
             })}
@@ -82,7 +98,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
             {ctaButton?.show && ctaButton?.label && (
               <Link
                 href={ctaButton.href || '/contact'}
-                className="px-5 py-2.5 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-red-700 transition-colors"
+                className="px-5 py-2.5 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-red-700 transition-colors shadow-sm"
               >
                 {ctaButton.label}
               </Link>
@@ -104,9 +120,11 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-x-0 top-20 bottom-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity">
           <div className="bg-white border-b border-gray-200 px-6 py-8 shadow-xl space-y-5 animate-in slide-in-from-top duration-300">
-            <nav className="flex flex-col space-y-4">
+            <nav className="flex flex-col space-y-2">
               {navItems.map((item: any, idx: number) => {
                 const isExternal = item.isExternal || item.href.startsWith('http')
+                const active = !isExternal && isLinkActive(item.href)
+
                 return isExternal ? (
                   <a
                     key={idx}
@@ -114,7 +132,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-bold text-base text-dark hover:text-primary transition-colors uppercase tracking-wider py-2 border-b border-gray-50"
+                    className="font-bold text-base text-dark hover:text-primary transition-colors uppercase tracking-wider py-2.5 px-3 rounded-lg border-b border-gray-50"
                   >
                     {item.label}
                   </a>
@@ -123,9 +141,14 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                     key={idx}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-bold text-base text-dark hover:text-primary transition-colors uppercase tracking-wider py-2 border-b border-gray-50"
+                    className={`font-bold text-base uppercase tracking-wider py-2.5 px-3 rounded-lg transition-colors flex items-center justify-between ${
+                      active
+                        ? 'bg-primary/10 text-primary font-black'
+                        : 'text-dark hover:text-primary hover:bg-gray-50'
+                    }`}
                   >
-                    {item.label}
+                    <span>{item.label}</span>
+                    {active && <span className="w-2 h-2 rounded-full bg-primary" />}
                   </Link>
                 )
               })}
