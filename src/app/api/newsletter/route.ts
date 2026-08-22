@@ -4,7 +4,8 @@ import { writeClient } from '@/sanity/client'
 import { checkRateLimit } from '@/lib/rateLimit'
 
 const newsletterSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+  email: z.string().email('Please enter a valid email address').max(150, 'Email address is too long'),
+  hp_field: z.string().optional(),
 })
 
 export async function POST(req: NextRequest) {
@@ -33,7 +34,12 @@ export async function POST(req: NextRequest) {
 
     // 2. Validate input
     const body = await req.json()
-    const { email } = newsletterSchema.parse(body)
+    const { email, hp_field } = newsletterSchema.parse(body)
+
+    // Honeypot bot protection
+    if (hp_field && hp_field.trim().length > 0) {
+      return NextResponse.json({ success: true, message: 'Thank you for subscribing!' }, { status: 200 })
+    }
 
     // 3. Prevent duplicate subscriptions by checking Sanity
     const existing = await writeClient.fetch(
