@@ -23,42 +23,43 @@ export function AboutHero({ data }: AboutHeroProps) {
         <div className="max-w-3xl">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-sm uppercase tracking-widest text-primary">Who We Are</span>
+            <span className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary">
+              {subtitle}
+            </span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-heading font-black text-white leading-none mb-6">
-            PASSION <br />
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-black text-white leading-tight mb-6">
+            PASSION <br className="hidden sm:inline" />
             <span className="text-primary">BEYOND PLAY.</span>
           </h1>
-          <p className="text-gray-300 max-w-xl mb-16 text-lg">
-            Sportoid is a young start-up committed to the professional representation,
-            execution and valuation of sporting properties in India.
+          <p className="text-gray-300 max-w-xl mb-12 text-base md:text-lg leading-relaxed">
+            {description}
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 border-t border-gray-800 pt-12">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10 border-t border-gray-800 pt-10">
+            <div className="p-4 bg-white/5 rounded-lg border border-white/5">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-primary border rounded-full p-2 border-primary"><Target className="w-6 h-6" /></span>
-                <h3 className="text-white font-bold text-lg">Our Mission</h3>
+                <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Target className="w-5 h-5" /></span>
+                <h3 className="text-white font-bold text-base md:text-lg">{missionTitle}</h3>
               </div>
-              <p className="text-gray-400 text-sm">
-                To grow the game, create value and leave a lasting legacy in the world of sport.
+              <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
+                {missionDescription}
               </p>
             </div>
-            <div>
+            <div className="p-4 bg-white/5 rounded-lg border border-white/5">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-primary border rounded-full p-2 border-primary"><Star className="w-6 h-6" /></span>
-                <h3 className="text-white font-bold text-lg">Our Vision</h3>
+                <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Star className="w-5 h-5" /></span>
+                <h3 className="text-white font-bold text-base md:text-lg">{visionTitle}</h3>
               </div>
-              <p className="text-gray-400 text-sm">
-                To be India's most trusted partner in sports management and property representation.
+              <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
+                {visionDescription}
               </p>
             </div>
-            <div>
+            <div className="p-4 bg-white/5 rounded-lg border border-white/5 sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-primary border rounded-full p-2 border-primary"><Heart className="w-6 h-6" /></span>
-                <h3 className="text-white font-bold text-lg">Our Belief</h3>
+                <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Heart className="w-5 h-5" /></span>
+                <h3 className="text-white font-bold text-base md:text-lg">Our Belief</h3>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
                 Integrity, commitment and performance — on and off the field.
               </p>
             </div>

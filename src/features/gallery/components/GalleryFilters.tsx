@@ -10,19 +10,19 @@ interface GalleryFiltersProps {
 
 export function GalleryFilters({ currentCategory }: GalleryFiltersProps) {
   return (
-    <div className="w-full bg-white border-b border-gray-100 py-6">
+    <div className="w-full bg-white border-b border-gray-100 py-4 md:py-6">
       <Container>
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
-          <span className="font-bold text-sm text-dark uppercase tracking-widest">Sort Portfolio:</span>
-          <div className="flex flex-wrap items-center gap-4 md:gap-8">
+        <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+          <span className="font-bold text-xs md:text-sm text-dark uppercase tracking-widest">Sort Portfolio:</span>
+          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
             {CATEGORIES.map((cat) => (
               <Link 
                 key={cat}
                 href={cat === 'ALL' ? '/gallery' : `/gallery?category=${cat}`}
-                className={`font-bold text-sm uppercase tracking-widest transition-colors pb-1 border-b-2 ${
+                className={`whitespace-nowrap font-bold text-xs md:text-sm uppercase tracking-wider transition-all px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border ${
                   currentCategory === cat 
-                    ? 'text-white bg-primary px-4 py-2 border-primary rounded' 
-                    : 'text-gray-500 border-transparent hover:text-dark'
+                    ? 'text-white bg-primary border-primary shadow-sm' 
+                    : 'text-gray-600 border-gray-200 hover:border-gray-400 hover:text-dark bg-gray-50/50'
                 }`}
               >
                 {cat}

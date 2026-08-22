@@ -11,13 +11,13 @@ export function PeopleHero() {
         <div className="max-w-2xl">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-sm uppercase tracking-widest text-primary">Our Leaders</span>
+            <span className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary">Our Leaders</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-heading font-black text-white leading-none mb-6">
-            THE PEOPLE <br />
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-black text-white leading-tight mb-6">
+            THE PEOPLE <br className="hidden sm:inline" />
             <span className="text-primary">BEHIND SPORTOID</span>
           </h1>
-          <p className="text-gray-300 text-lg">
+          <p className="text-gray-300 text-base md:text-lg leading-relaxed">
             Meet the visionaries driving our passion for sport and building lasting impact.
           </p>
         </div>

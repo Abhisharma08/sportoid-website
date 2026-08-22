@@ -22,9 +22,9 @@ export function BlogHero({
         <div className="max-w-2xl">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-sm uppercase tracking-widest text-primary">{breadcrumbs}</span>
+            <span className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary">{breadcrumbs}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-heading font-black text-white leading-tight mb-6 whitespace-pre-line">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-black text-white leading-tight mb-6 whitespace-pre-line">
             {title.split('\\n').map((line, i, arr) => (
               <React.Fragment key={i}>
                 {i === arr.length - 1 ? <span className="text-primary">{line}</span> : line}
@@ -32,7 +32,7 @@ export function BlogHero({
               </React.Fragment>
             ))}
           </h1>
-          <p className="text-gray-300 text-lg whitespace-pre-line">
+          <p className="text-gray-300 text-base md:text-lg leading-relaxed whitespace-pre-line">
             {subtitle.replace('\\\\n', '\\n')}
           </p>
         </div>
