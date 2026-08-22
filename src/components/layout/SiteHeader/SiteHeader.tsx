@@ -64,7 +64,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 h-full">
+          <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item: any, idx: number) => {
               const isExternal = item.isExternal || item.href.startsWith('http')
               const active = !isExternal && isLinkActive(item.href)
@@ -75,7 +75,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider h-full flex items-center"
+                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider py-1"
                 >
                   {item.label}
                 </a>
@@ -83,13 +83,13 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                 <Link
                   key={idx}
                   href={item.href}
-                  className={`font-bold text-sm transition-colors uppercase tracking-wider h-full flex items-center relative ${
+                  className={`font-bold text-sm transition-colors uppercase tracking-wider py-1 relative ${
                     active ? 'text-primary' : 'text-dark hover:text-primary'
                   }`}
                 >
                   {item.label}
                   {active && (
-                    <span className="absolute bottom-0 inset-x-0 h-0.5 bg-primary rounded-t-sm" />
+                    <span className="absolute -bottom-1 inset-x-0 h-0.5 bg-primary rounded-full" />
                   )}
                 </Link>
               )
@@ -98,7 +98,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
             {ctaButton?.show && ctaButton?.label && (
               <Link
                 href={ctaButton.href || '/contact'}
-                className="px-5 py-2.5 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-red-700 transition-colors shadow-sm"
+                className="px-5 py-2.5 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-red-700 transition-colors shadow-sm ml-2"
               >
                 {ctaButton.label}
               </Link>
