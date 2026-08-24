@@ -18,6 +18,13 @@ export default defineType({
       initialValue: 'Let’s Build the Future of Sports Together',
     }),
     defineField({
+      name: 'heroBackgroundImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Upload background image for Contact Us hero section',
+    }),
+    defineField({
       name: 'heroDescription',
       title: 'Hero Description',
       type: 'text',

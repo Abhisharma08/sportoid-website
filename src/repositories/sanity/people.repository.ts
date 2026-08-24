@@ -14,3 +14,18 @@ export const getPeopleData = async () => {
     return []
   }
 }
+
+export const getPeoplePageData = async () => {
+  const query = `*[_type == "peoplePage"][0]`
+  try {
+    return await client.fetch(query, {}, {
+      next: {
+        tags: ['people-page'],
+        revalidate: 3600,
+      },
+    })
+  } catch (error) {
+    console.error('Sanity fetch error (PeoplePage):', error)
+    return null
+  }
+}

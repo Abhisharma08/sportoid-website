@@ -1,11 +1,28 @@
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 
-export function ContactHero() {
+import { urlFor } from '@/sanity/image'
+
+export interface ContactHeroProps {
+  data?: any
+}
+
+export function ContactHero({ data }: ContactHeroProps) {
+  const heading = data?.heroHeading || "LET'S BUILD\nTOGETHER."
+  const description = data?.heroDescription || "Have a question, proposal, or want to explore a partnership? We'd love to hear from you."
+  const bgImgUrl = data?.heroBackgroundImage ? urlFor(data.heroBackgroundImage).width(1920).height(1080).url() : null
+
   return (
     <div className="relative w-full py-24 md:py-32 bg-dark overflow-hidden flex items-center">
-      <div className="absolute inset-0 bg-[url('/contact-hero-bg.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+      {bgImgUrl ? (
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
+          style={{ backgroundImage: `url(${bgImgUrl})` }}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-[url('/contact-hero-bg.jpg')] bg-cover bg-center opacity-40 mix-blend-overlay" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-transparent" />
       
       <Container className="relative z-10">
         <div className="max-w-2xl">
@@ -18,7 +35,7 @@ export function ContactHero() {
             <span className="text-primary">TOGETHER.</span>
           </h1>
           <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-            Have a question, proposal, or want to explore a partnership? We'd love to hear from you.
+            {description}
           </p>
         </div>
       </Container>

@@ -10,6 +10,9 @@ import post from './documents/post'
 import postCategory from './documents/postCategory'
 import author from './documents/author'
 import contactPage from './documents/contactPage'
+import peoplePage from './documents/peoplePage'
+import galleryPage from './documents/galleryPage'
+import blogPage from './documents/blogPage'
 import contactSubmission from './documents/contactSubmission'
 import newsletterSubscriber from './documents/newsletterSubscriber'
 
@@ -19,6 +22,9 @@ export const schemaTypes = [
   footerSettings,
   homePage,
   aboutPage,
+  peoplePage,
+  galleryPage,
+  blogPage,
   person,
   galleryItem,
   galleryCategory,

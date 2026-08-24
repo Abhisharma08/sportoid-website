@@ -5,7 +5,7 @@ import { GalleryCard } from '@/features/gallery/components/GalleryCard'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
 
-import { fetchGalleryItems } from '@/services/site/gallery.service'
+import { fetchGalleryItems, fetchGalleryPage } from '@/services/site/gallery.service'
 import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
@@ -41,7 +41,11 @@ export default async function GalleryPage({
   const categoryParam = resolvedParams?.category
   const category = typeof categoryParam === 'string' ? categoryParam : 'ALL'
 
-  const cmsItems = await fetchGalleryItems()
+  const [cmsItems, pageSettings] = await Promise.all([
+    fetchGalleryItems(),
+    fetchGalleryPage(),
+  ])
+
   const rawItems = cmsItems && cmsItems.length > 0
     ? cmsItems.map((item: any) => ({
         id: item._id,
@@ -57,7 +61,7 @@ export default async function GalleryPage({
 
   return (
     <>
-      <GalleryHero />
+      <GalleryHero data={pageSettings} />
       <GalleryFilters currentCategory={category} />
       <Section className="bg-light">
         <Container>

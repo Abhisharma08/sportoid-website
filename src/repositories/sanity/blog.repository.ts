@@ -50,3 +50,18 @@ export const getPostBySlugData = async (slug: string) => {
     return null
   }
 }
+
+export const getBlogPageData = async () => {
+  const query = `*[_type == "blogPage"][0]`
+  try {
+    return await client.fetch(query, {}, {
+      next: {
+        tags: ['blog-page'],
+        revalidate: 3600,
+      },
+    })
+  } catch (error) {
+    console.error('Sanity fetch error (BlogPage):', error)
+    return null
+  }
+}

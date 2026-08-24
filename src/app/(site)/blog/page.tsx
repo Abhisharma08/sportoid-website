@@ -5,7 +5,7 @@ import { BlogSidebar } from '@/features/blog/components/BlogSidebar'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
 
-import { fetchPosts } from '@/services/site/blog.service'
+import { fetchPosts, fetchBlogPage } from '@/services/site/blog.service'
 import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
@@ -35,7 +35,11 @@ const FALLBACK_POSTS = [
 ]
 
 export default async function BlogListingPage() {
-  const cmsPosts = await fetchPosts()
+  const [cmsPosts, pageSettings] = await Promise.all([
+    fetchPosts(),
+    fetchBlogPage(),
+  ])
+
   const posts = cmsPosts && cmsPosts.length > 0
     ? cmsPosts.map((p: any) => ({
         slug: p.slug,
@@ -48,7 +52,7 @@ export default async function BlogListingPage() {
 
   return (
     <>
-      <BlogHero />
+      <BlogHero data={pageSettings} />
       <Section className="bg-white">
         <Container>
           <div className="flex flex-col lg:flex-row gap-12">

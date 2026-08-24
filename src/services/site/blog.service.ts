@@ -1,4 +1,4 @@
-import { getPostsData, getPostBySlugData } from '../../repositories/sanity/blog.repository'
+import { getPostsData, getPostBySlugData, getBlogPageData } from '../../repositories/sanity/blog.repository'
 
 export const fetchPosts = async () => {
   return await getPostsData()
@@ -6,4 +6,8 @@ export const fetchPosts = async () => {
 
 export const fetchPostBySlug = async (slug: string) => {
   return await getPostBySlugData(slug)
+}
+
+export const fetchBlogPage = async () => {
+  return await getBlogPageData()
 }

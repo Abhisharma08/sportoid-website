@@ -41,3 +41,18 @@ export const getGalleryCategoriesData = async () => {
     return []
   }
 }
+
+export const getGalleryPageData = async () => {
+  const query = `*[_type == "galleryPage"][0]`
+  try {
+    return await client.fetch(query, {}, {
+      next: {
+        tags: ['gallery-page'],
+        revalidate: 3600,
+      },
+    })
+  } catch (error) {
+    console.error('Sanity fetch error (GalleryPage):', error)
+    return null
+  }
+}

@@ -18,6 +18,13 @@ export default defineType({
       initialValue: 'Who We Are',
     }),
     defineField({
+      name: 'heroBackgroundImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Upload background image for About Us hero section',
+    }),
+    defineField({
       name: 'heroHeading',
       title: 'Hero Heading',
       type: 'string',

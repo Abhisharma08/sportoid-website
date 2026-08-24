@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 import { Target, Star, Heart } from 'lucide-react'
 
+import { urlFor } from '@/sanity/image'
+
 export interface AboutHeroProps {
   data?: any
 }
@@ -14,10 +16,20 @@ export function AboutHero({ data }: AboutHeroProps) {
   const missionDescription = data?.missionDescription || 'To grow the game, create value and leave a lasting legacy in the world of sport.'
   const visionTitle = data?.visionTitle || 'Our Vision'
   const visionDescription = data?.visionDescription || "To be India's most trusted partner in sports management and property representation."
+  const bgImgUrl = data?.heroBackgroundImage ? urlFor(data.heroBackgroundImage).width(1920).height(1080).url() : null
+
   return (
     <div className="relative w-full py-24 md:py-32 bg-dark overflow-hidden flex items-center">
-      {/* Background image placeholder */}
-      <div className="absolute inset-0 bg-[url('/about-hero-bg.jpg')] bg-cover bg-right opacity-30 mix-blend-overlay"></div>
+      {/* Background image layer */}
+      {bgImgUrl ? (
+        <div
+          className="absolute inset-0 bg-cover bg-right opacity-40 mix-blend-overlay"
+          style={{ backgroundImage: `url(${bgImgUrl})` }}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-[url('/about-hero-bg.jpg')] bg-cover bg-right opacity-30 mix-blend-overlay" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
       
       <Container className="relative z-10">
         <div className="max-w-3xl">

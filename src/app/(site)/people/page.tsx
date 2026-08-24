@@ -3,7 +3,7 @@ import { PersonCard } from '@/features/people/components/PersonCard'
 import { AboutStats } from '@/features/about/components/AboutStats'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
-import { fetchPeople } from '@/services/site/people.service'
+import { fetchPeople, fetchPeoplePage } from '@/services/site/people.service'
 import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
@@ -16,10 +16,14 @@ export async function generateMetadata() {
 }
 
 export default async function PeoplePage() {
-  const peopleFromCms = await fetchPeople()
+  const [peopleFromCms, pageSettings] = await Promise.all([
+    fetchPeople(),
+    fetchPeoplePage(),
+  ])
+
   return (
     <>
-      <PeopleHero />
+      <PeopleHero data={pageSettings} />
       <Section className="bg-light relative">
         {/* Decorative dots background */}
         <div className="absolute top-0 left-0 right-0 h-64 bg-[url('/dots.svg')] bg-repeat opacity-50 pointer-events-none"></div>
