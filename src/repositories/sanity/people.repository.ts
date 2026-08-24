@@ -1,7 +1,14 @@
 import { client } from '../../sanity/client'
 
 export const getPeopleData = async () => {
-  const query = `*[_type == "person"] | order(order asc)`
+  const query = `*[_type == "person"] | order(order asc){
+    _id,
+    name,
+    role,
+    bio,
+    avatar,
+    order
+  }`
   try {
     return await client.fetch(query, {}, {
       next: {
@@ -16,7 +23,14 @@ export const getPeopleData = async () => {
 }
 
 export const getPeoplePageData = async () => {
-  const query = `*[_type == "peoplePage"][0]`
+  const query = `*[_type == "peoplePage"][0]{
+    _id,
+    title,
+    heroSubtitle,
+    heroHeading,
+    heroBackgroundImage,
+    heroDescription
+  }`
   try {
     return await client.fetch(query, {}, {
       next: {
