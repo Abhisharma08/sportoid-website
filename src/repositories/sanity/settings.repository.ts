@@ -17,7 +17,12 @@ export const getSiteSettingsData = async () => {
     socialLinks
   }`
   try {
-    return await client.fetch(query)
+    return await client.fetch(query, {}, {
+      next: {
+        tags: ['site-settings'],
+        revalidate: 3600,
+      },
+    })
   } catch (error) {
     console.error('Sanity fetch error (SiteSettings):', error)
     return null

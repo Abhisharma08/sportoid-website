@@ -13,7 +13,12 @@ export const getPostsData = async () => {
     "category": category->title
   } | order(publishedAt desc)`
   try {
-    return await client.fetch(query)
+    return await client.fetch(query, {}, {
+      next: {
+        tags: ['posts'],
+        revalidate: 3600,
+      },
+    })
   } catch (error) {
     console.error('Sanity fetch error (Posts):', error)
     return []
@@ -34,7 +39,12 @@ export const getPostBySlugData = async (slug: string) => {
     "category": category->title
   }`
   try {
-    return await client.fetch(query, { slug })
+    return await client.fetch(query, { slug }, {
+      next: {
+        tags: [`post:${slug}`, 'posts'],
+        revalidate: 3600,
+      },
+    })
   } catch (error) {
     console.error('Sanity fetch error (Post by slug):', error)
     return null

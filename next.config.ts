@@ -3,6 +3,16 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false, // Prevent X-Powered-By header leakage
+  compress: true, // Enable gzip and brotli compression
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
+  },
   headers: async () => {
     return [
       {
