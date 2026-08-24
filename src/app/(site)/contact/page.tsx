@@ -44,11 +44,29 @@ export default async function ContactPage() {
       </Section>
       
       {/* Map Section */}
-      <div className="w-full h-[400px] bg-gray-200 relative flex items-center justify-center">
-        <div className="absolute inset-0 grayscale opacity-80 bg-[url('https://maps.googleapis.com/maps/api/staticmap?center=Mumbai,India&zoom=12&size=1200x400&sensor=false')] bg-cover bg-center"></div>
-        <div className="bg-white p-6 shadow-lg rounded-lg relative z-10 max-w-sm text-center">
-          <h4 className="font-heading font-black text-xl mb-2">Our Headquarters</h4>
-          <p className="text-gray-500 text-sm">Mumbai, Maharashtra, India</p>
+      <div className="w-full h-[450px] bg-dark relative overflow-hidden">
+        <iframe
+          title="Sportoid Office Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.1160982357!2d72.74109995709657!3d19.08219783958221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen={false}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="w-full h-full grayscale contrast-125 opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+        />
+        
+        {/* Floating Headquarters Info Card */}
+        <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 z-10 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-gray-100 max-w-xs sm:max-w-sm">
+          <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span>Headquarters</span>
+          </div>
+          <h4 className="font-heading font-black text-lg text-dark mb-1">Sportoid Management</h4>
+          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+            Mumbai, Maharashtra, India
+          </p>
         </div>
       </div>
     </>
