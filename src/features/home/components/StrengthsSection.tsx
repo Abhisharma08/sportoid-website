@@ -62,9 +62,9 @@ export function StrengthsSection({ strengths }: StrengthsSectionProps) {
           </h2>
         </FadeIn>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
           {items.slice(0, 3).map((item, idx) => (
-            <FadeIn key={idx} direction="up" delay={0.15 * (idx + 1)}>
+            <FadeIn key={idx} direction="up" delay={0.15 * (idx + 1)} className="h-full flex flex-col">
               <StrengthCard 
                 title={item.title || ''}
                 description={item.description || ''}
