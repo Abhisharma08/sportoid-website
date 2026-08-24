@@ -6,6 +6,7 @@ import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
 
 import { fetchContactPage } from '@/services/site/contact.service'
+import { fetchSiteSettings } from '@/services/site/settings.service'
 import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
@@ -18,7 +19,11 @@ export async function generateMetadata() {
 }
 
 export default async function ContactPage() {
-  const contactData = await fetchContactPage()
+  const [contactData, settings] = await Promise.all([
+    fetchContactPage(),
+    fetchSiteSettings(),
+  ])
+
   return (
     <>
       <ContactHero />
@@ -29,7 +34,7 @@ export default async function ContactPage() {
         <Container className="relative z-10">
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="lg:w-1/3">
-              <ContactInfo data={contactData} />
+              <ContactInfo data={contactData} settings={settings} />
             </div>
             <div className="lg:w-2/3">
               <ContactForm />
