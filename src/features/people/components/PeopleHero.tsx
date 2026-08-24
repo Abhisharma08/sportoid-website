@@ -17,13 +17,13 @@ export function PeopleHero({ data }: PeopleHeroProps) {
     <div className="relative w-full py-24 md:py-32 bg-dark overflow-hidden flex items-center">
       {bgImgUrl ? (
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-overlay"
+          className="absolute inset-0 bg-cover bg-center md:bg-right opacity-80"
           style={{ backgroundImage: `url(${bgImgUrl})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[url('/people-hero-bg.jpg')] bg-cover bg-center opacity-30 mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[url('/people-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20" />
       
       <Container className="relative z-10">
         <div className="max-w-2xl">
