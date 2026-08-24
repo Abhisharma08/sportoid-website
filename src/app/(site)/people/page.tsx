@@ -15,6 +15,8 @@ export async function generateMetadata() {
   })
 }
 
+import { urlFor } from '@/sanity/image'
+
 export default async function PeoplePage() {
   const [peopleFromCms, pageSettings] = await Promise.all([
     fetchPeople(),
@@ -31,14 +33,18 @@ export default async function PeoplePage() {
         <Container className="relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {peopleFromCms && peopleFromCms.length > 0 ? (
-              peopleFromCms.map((person: any) => (
-                <PersonCard
-                  key={person._id}
-                  name={person.name}
-                  role={person.role}
-                  bio={<p className="leading-relaxed">{person.bio}</p>}
-                />
-              ))
+              peopleFromCms.map((person: any) => {
+                const avatarUrl = person.avatar ? urlFor(person.avatar).width(600).height(600).url() : undefined
+                return (
+                  <PersonCard
+                    key={person._id}
+                    name={person.name}
+                    role={person.role}
+                    imageSrc={avatarUrl}
+                    bio={<p className="leading-relaxed">{person.bio}</p>}
+                  />
+                )
+              })
             ) : (
               <>
                 <PersonCard 

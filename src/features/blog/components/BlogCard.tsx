@@ -13,17 +13,22 @@ export interface BlogCardProps {
 import { FadeIn } from '@/components/ui/FadeIn'
 
 export function BlogCard({ title, excerpt, date, category, slug, imageSrc }: BlogCardProps) {
+  const cricketBlogImages: Record<string, string> = {
+    'business-of-cricket': 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80',
+    'winning-partnerships': 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80',
+  }
+
+  const finalImage = imageSrc || cricketBlogImages[slug] || 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=800&q=80'
+
   return (
     <FadeIn direction="up" delay={0.1}>
       <div className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col h-full group">
-        <div className="relative h-64 bg-gray-200 overflow-hidden">
-          {imageSrc && (
-            <img
-              src={imageSrc}
-              alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          )}
+        <div className="relative h-64 bg-dark overflow-hidden">
+          <img
+            src={finalImage}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
           <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded text-primary text-xs font-bold uppercase tracking-wider shadow-sm">
             {category}
           </div>

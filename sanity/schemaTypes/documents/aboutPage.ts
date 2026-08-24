@@ -86,6 +86,7 @@ export default defineType({
           fields: [
             defineField({ name: 'category', title: 'Category (e.g. Players)', type: 'string' }),
             defineField({ name: 'title', title: 'Heading', type: 'string' }),
+            defineField({ name: 'image', title: 'Service Image', type: 'image', options: { hotspot: true } }),
             defineField({ name: 'paragraphs', title: 'Paragraphs', type: 'array', of: [{ type: 'text' }] }),
             defineField({ name: 'imageAlignment', title: 'Image Alignment', type: 'string', options: { list: ['left', 'right'] } }),
           ],

@@ -10,14 +10,19 @@ export interface PersonCardProps {
 import { FadeIn } from '@/components/ui/FadeIn'
 
 export function PersonCard({ name, role, bio, imageSrc }: PersonCardProps) {
+  const fallbackImages: Record<string, string> = {
+    'Harish Krishnamachar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80',
+    'Nitin Khanna': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80',
+  }
+
+  const finalImage = imageSrc || fallbackImages[name] || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80'
+
   return (
     <FadeIn direction="up" delay={0.15}>
       <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 flex flex-col h-full group">
         <div className="relative self-center mb-10 mt-4">
           <div className="w-48 h-48 rounded-full overflow-hidden border-[6px] border-white shadow-lg z-10 relative bg-gray-200 group-hover:scale-105 transition-transform duration-300">
-            {imageSrc && (
-              <img src={imageSrc} alt={name} className="w-full h-full object-cover" />
-            )}
+            <img src={finalImage} alt={name} className="w-full h-full object-cover" />
           </div>
           {/* Red accent circle behind image */}
           <div className="absolute -top-4 -left-4 w-48 h-48 rounded-full border-2 border-primary -z-0 transition-transform duration-300 group-hover:scale-110"></div>

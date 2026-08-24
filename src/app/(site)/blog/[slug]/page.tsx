@@ -77,6 +77,7 @@ const DUMMY_POST = {
 
 import { fetchPostBySlug } from '@/services/site/blog.service'
 import { constructMetadata } from '@/lib/metadata'
+import { urlFor } from '@/sanity/image'
 import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -132,8 +133,16 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
                 readingTime={readingTime} 
               />
               
-              <div className="mb-10 rounded-lg overflow-hidden bg-gray-200 aspect-[21/9]">
-                {/* Hero image placeholder */}
+              <div className="mb-10 rounded-xl overflow-hidden bg-dark aspect-[21/9] shadow-md relative">
+                <img
+                  src={
+                    post.mainImage
+                      ? urlFor(post.mainImage).width(1200).height(514).url()
+                      : 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80'
+                  }
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               <PortableTextRenderer value={content} />

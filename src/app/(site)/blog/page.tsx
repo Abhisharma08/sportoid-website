@@ -34,6 +34,8 @@ const FALLBACK_POSTS = [
   }
 ]
 
+import { urlFor } from '@/sanity/image'
+
 export default async function BlogListingPage() {
   const [cmsPosts, pageSettings] = await Promise.all([
     fetchPosts(),
@@ -45,6 +47,7 @@ export default async function BlogListingPage() {
         slug: p.slug,
         title: p.title,
         excerpt: p.excerpt || '',
+        imageSrc: p.mainImage ? urlFor(p.mainImage).width(800).height(500).url() : undefined,
         date: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'May 12, 2024',
         category: (p.category || 'CRICKET').toUpperCase(),
       }))

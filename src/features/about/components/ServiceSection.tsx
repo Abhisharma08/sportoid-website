@@ -9,7 +9,7 @@ interface ServiceSectionProps {
   category: string
   title: string
   description: React.ReactNode
-  imageSrc: string
+  imageSrc?: string
   imageAlignment: 'left' | 'right'
   variant?: 'light' | 'dark' | 'dark-gray'
 }
@@ -24,17 +24,30 @@ export function ServiceSection({
 }: ServiceSectionProps) {
   const isLeft = imageAlignment === 'left'
 
+  // Default cricket action fallback images
+  const defaultImages: Record<string, string> = {
+    'Players': 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80',
+    'Sponsorship': 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80',
+    'Event Delivery': 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=1200&q=80',
+  }
+
+  const finalImageSrc = imageSrc?.startsWith('http') || imageSrc?.startsWith('/') && !imageSrc.endsWith('.jpg') 
+    ? imageSrc 
+    : (imageSrc && imageSrc.startsWith('http') ? imageSrc : defaultImages[category] || 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80')
+
   return (
     <Section variant={variant}>
       <Container>
         <div className={`flex flex-col gap-12 lg:gap-20 items-center ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
           <div className="w-full lg:w-1/2">
             <FadeIn direction={isLeft ? 'right' : 'left'} delay={0.1}>
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-200 shadow-md">
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-bold">
-                  Image: {imageSrc}
-                </div>
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-dark shadow-xl group">
+                <img
+                  src={finalImageSrc}
+                  alt={`${title} - ${category}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               </div>
             </FadeIn>
           </div>

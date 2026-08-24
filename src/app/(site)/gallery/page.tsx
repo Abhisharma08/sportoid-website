@@ -32,6 +32,8 @@ const FALLBACK_ITEMS = [
   { id: 11, title: 'Indian Premier League', year: '2016', category: 'CRICKET' },
 ]
 
+import { urlFor } from '@/sanity/image'
+
 export default async function GalleryPage({
   searchParams,
 }: {
@@ -52,6 +54,7 @@ export default async function GalleryPage({
         title: item.title,
         year: item.eventDate ? new Date(item.eventDate).getFullYear().toString() : '2024',
         category: (item.category || 'CRICKET').toUpperCase(),
+        image: item.image ? urlFor(item.image).width(600).height(600).url() : undefined,
       }))
     : FALLBACK_ITEMS
 
@@ -67,7 +70,7 @@ export default async function GalleryPage({
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredItems.map((item: any) => (
-              <GalleryCard key={item.id} title={item.title} year={item.year} />
+              <GalleryCard key={item.id} title={item.title} year={item.year} imageSrc={item.image} />
             ))}
           </div>
         </Container>
