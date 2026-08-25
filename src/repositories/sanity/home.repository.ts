@@ -4,39 +4,31 @@ export const getHomePageData = async () => {
   const query = `*[_type == "homePage"][0]{
     _id,
     title,
-    heroHeading,
-    heroSubtitle,
-    heroDescription,
-    heroBackgroundImage,
-    heroCtaText,
-    heroCtaLink,
-    sliderItems[]{
+    heroSlides[]{
       _key,
       title,
       subtitle,
       description,
-      image,
       ctaText,
-      ctaLink
+      ctaLink,
+      backgroundImage
     },
-    whoWeAreHeading,
-    whoWeAreSubtitle,
-    whoWeAreDescription,
-    whoWeAreParagraphs,
-    strengthsHeading,
-    strengthsSubtitle,
+    whoWeAre{
+      tagline,
+      heading,
+      description
+    },
     strengths[]{
       _key,
       title,
       description,
       icon
     },
-    featuredTournamentsHeading,
-    featuredTournaments[]{
-      _key,
-      title,
-      year,
-      image
+    partnershipCta{
+      heading,
+      description,
+      buttonText,
+      buttonLink
     }
   }`
   try {

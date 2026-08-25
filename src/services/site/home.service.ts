@@ -4,3 +4,4 @@ export const fetchHomePage = async () => {
   const data = await getHomePageData()
   return data
 }
+
