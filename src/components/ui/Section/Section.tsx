@@ -16,7 +16,7 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
     return (
       <section
         ref={ref}
-        className={`py-16 md:py-24 ${variants[variant]} ${className}`}
+        className={`py-10 sm:py-16 md:py-24 ${variants[variant]} ${className}`}
         {...props}
       >
         {children}

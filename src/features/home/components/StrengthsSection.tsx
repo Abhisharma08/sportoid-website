@@ -1,9 +1,10 @@
+'use client'
+
 import * as React from 'react'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
 import { StrengthCard } from './StrengthCard'
 import { Users, Trophy, Handshake, Calendar } from 'lucide-react'
-
 import { FadeIn } from '@/components/ui/FadeIn'
 
 export interface StrengthsSectionProps {
@@ -50,21 +51,30 @@ export function StrengthsSection({ strengths }: StrengthsSectionProps) {
       ]
 
   return (
-    <Section variant="dark-gray">
-      <Container>
-        <FadeIn direction="up" delay={0.1}>
+    <Section variant="dark-gray" className="relative overflow-hidden">
+      {/* Subtle background dot pattern */}
+      <div className="absolute inset-0 dotted-grid-subtle pointer-events-none" />
+
+      <Container className="relative z-10">
+        <FadeIn direction="right" delay={0.1}>
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-sm uppercase tracking-widest text-white">What We Do</span>
+            <div className="w-8 h-1 bg-primary rounded-full" />
+            <span className="font-bold text-xs sm:text-sm uppercase tracking-widest text-white">What We Do</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-heading font-black mb-16 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black mb-10 md:mb-16 text-white">
             OUR CORE STRENGTHS
           </h2>
         </FadeIn>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch perspective-1000">
           {items.slice(0, 3).map((item, idx) => (
-            <FadeIn key={idx} direction="up" delay={0.15 * (idx + 1)} className="h-full flex flex-col">
+            <FadeIn
+              key={idx}
+              direction="up"
+              delay={0.15 * (idx + 1)}
+              rotate={idx === 1 ? 0 : idx === 0 ? 2 : -2}
+              className="h-full flex flex-col"
+            >
               <StrengthCard 
                 title={item.title || ''}
                 description={item.description || ''}

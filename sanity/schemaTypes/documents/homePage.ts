@@ -37,6 +37,8 @@ export default defineType({
         defineField({ name: 'tagline', title: 'Tagline', type: 'string' }),
         defineField({ name: 'heading', title: 'Heading', type: 'string' }),
         defineField({ name: 'description', title: 'Description', type: 'text' }),
+        defineField({ name: 'image1', title: 'Top Image', type: 'image', options: { hotspot: true } }),
+        defineField({ name: 'image2', title: 'Bottom Image', type: 'image', options: { hotspot: true } }),
       ],
     }),
     defineField({

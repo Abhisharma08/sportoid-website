@@ -16,7 +16,9 @@ export const getHomePageData = async () => {
     whoWeAre{
       tagline,
       heading,
-      description
+      description,
+      image1,
+      image2
     },
     strengths[]{
       _key,

@@ -2,6 +2,7 @@ import { fetchHomePage } from '@/services/site/home.service'
 import { HeroSlider } from '@/features/home/components/HeroSlider'
 import { WhoWeAreSection } from '@/features/home/components/WhoWeAreSection'
 import { StrengthsSection } from '@/features/home/components/StrengthsSection'
+import { PartnershipCTA } from '@/features/home/components/PartnershipCTA'
 
 export default async function HomePage() {
   const homeData = await fetchHomePage()
@@ -11,6 +12,7 @@ export default async function HomePage() {
       <HeroSlider slides={homeData?.heroSlides} />
       <WhoWeAreSection data={homeData?.whoWeAre} />
       <StrengthsSection strengths={homeData?.strengths} />
+      <PartnershipCTA data={homeData?.partnershipCta} />
     </>
   )
 }
