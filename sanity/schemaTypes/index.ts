@@ -15,6 +15,9 @@ import galleryPage from './documents/galleryPage'
 import blogPage from './documents/blogPage'
 import contactSubmission from './documents/contactSubmission'
 import newsletterSubscriber from './documents/newsletterSubscriber'
+import event from './documents/event'
+import linkedinPost from './documents/linkedinPost'
+import clientLogo from './documents/clientLogo'
 
 export const schemaTypes = [
   siteSettings,
@@ -28,6 +31,9 @@ export const schemaTypes = [
   person,
   galleryItem,
   galleryCategory,
+  event,
+  linkedinPost,
+  clientLogo,
   post,
   postCategory,
   author,

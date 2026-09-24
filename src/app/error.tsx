@@ -21,10 +21,10 @@ export default function ErrorBoundary({
     <div className="min-h-[70vh] bg-dark flex items-center justify-center py-24">
       <Container>
         <div className="max-w-xl mx-auto text-center">
-          <div className="inline-block px-4 py-1 rounded bg-red-900/30 text-red-400 font-bold text-sm uppercase tracking-widest mb-6">
+          <div className="inline-block px-4 py-1 rounded bg-red-900/30 text-red-400 font-semibold text-sm uppercase tracking-widest mb-6">
             Something went wrong
           </div>
-          <h1 className="text-4xl md:text-6xl font-heading font-black text-white leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-heading font-semibold text-white leading-tight mb-6">
             UNEXPECTED <span className="text-primary">ERROR.</span>
           </h1>
           <p className="text-gray-300 text-lg mb-10 leading-relaxed">

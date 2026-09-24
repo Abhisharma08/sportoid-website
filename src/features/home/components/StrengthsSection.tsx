@@ -51,17 +51,15 @@ export function StrengthsSection({ strengths }: StrengthsSectionProps) {
       ]
 
   return (
-    <Section variant="dark-gray" className="relative overflow-hidden">
-      {/* Subtle background dot pattern */}
-      <div className="absolute inset-0 dotted-grid-subtle pointer-events-none" />
+    <Section variant="light" className="relative overflow-hidden bg-white">
 
       <Container className="relative z-10">
         <FadeIn direction="right" delay={0.1}>
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-1 bg-primary rounded-full" />
-            <span className="font-bold text-xs sm:text-sm uppercase tracking-widest text-white">What We Do</span>
+            <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest text-dark">What We Do</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-black mb-10 md:mb-16 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-semibold mb-10 md:mb-16 text-dark">
             OUR CORE STRENGTHS
           </h2>
         </FadeIn>

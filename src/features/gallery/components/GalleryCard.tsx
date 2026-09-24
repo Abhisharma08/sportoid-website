@@ -30,7 +30,7 @@ export function GalleryCard({ title, year, imageSrc }: GalleryCardProps) {
         
         <div className="w-full text-left">
           <div className="w-12 h-1 bg-primary mb-4 transition-all duration-300 group-hover:w-20"></div>
-          <h3 className="text-lg font-heading font-bold text-dark mb-2 leading-snug group-hover:text-primary transition-colors">{title}</h3>
+          <h3 className="text-lg font-heading font-semibold text-dark mb-2 leading-snug group-hover:text-primary transition-colors">{title}</h3>
           <div className="text-gray-500 text-sm">{year}</div>
         </div>
       </div>

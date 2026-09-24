@@ -55,11 +55,11 @@ export function ServiceSection({
             <FadeIn direction={isLeft ? 'left' : 'right'} delay={0.2}>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-8 h-1 bg-primary"></div>
-                <span className={`font-bold text-sm uppercase tracking-widest ${variant === 'light' ? 'text-dark' : 'text-primary'}`}>
+                <span className={`font-semibold text-sm uppercase tracking-widest ${variant === 'light' ? 'text-dark' : 'text-primary'}`}>
                   {category}
                 </span>
               </div>
-              <h2 className="text-3xl md:text-5xl font-heading font-black mb-8 leading-tight">
+              <h2 className="text-3xl md:text-5xl font-heading font-semibold mb-8 leading-tight">
                 {title.split('. ').map((part, i) => (
                   <React.Fragment key={i}>
                     {part}

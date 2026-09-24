@@ -59,11 +59,11 @@ export default async function ContactPage() {
         
         {/* Floating Headquarters Info Card */}
         <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 z-10 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-gray-100 max-w-xs sm:max-w-sm">
-          <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest mb-1.5">
+          <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-widest mb-1.5">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span>Headquarters</span>
           </div>
-          <h4 className="font-heading font-black text-lg text-dark mb-1">Sportoid Management</h4>
+          <h4 className="font-heading font-semibold text-lg text-dark mb-1">Sportoid Management</h4>
           <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
             Mumbai, Maharashtra, India
           </p>

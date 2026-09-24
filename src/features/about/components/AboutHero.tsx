@@ -29,17 +29,17 @@ export function AboutHero({ data }: AboutHeroProps) {
       ) : (
         <div className="absolute inset-0 bg-[url('/about-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
       
       <Container className="relative z-10">
         <div className="max-w-3xl">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-xs md:text-sm uppercase tracking-widest text-primary">
+            <span className="font-semibold text-xs md:text-sm uppercase tracking-widest text-primary">
               {subtitle}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-black text-white leading-tight mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6">
             PASSION <br className="hidden sm:inline" />
             <span className="text-primary">BEYOND PLAY.</span>
           </h1>
@@ -51,7 +51,7 @@ export function AboutHero({ data }: AboutHeroProps) {
             <div className="p-4 bg-white/5 rounded-lg border border-white/5">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Target className="w-5 h-5" /></span>
-                <h3 className="text-white font-bold text-base md:text-lg">{missionTitle}</h3>
+                <h3 className="text-white font-semibold text-base md:text-lg">{missionTitle}</h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
                 {missionDescription}
@@ -60,7 +60,7 @@ export function AboutHero({ data }: AboutHeroProps) {
             <div className="p-4 bg-white/5 rounded-lg border border-white/5">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Star className="w-5 h-5" /></span>
-                <h3 className="text-white font-bold text-base md:text-lg">{visionTitle}</h3>
+                <h3 className="text-white font-semibold text-base md:text-lg">{visionTitle}</h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
                 {visionDescription}
@@ -69,7 +69,7 @@ export function AboutHero({ data }: AboutHeroProps) {
             <div className="p-4 bg-white/5 rounded-lg border border-white/5 sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Heart className="w-5 h-5" /></span>
-                <h3 className="text-white font-bold text-base md:text-lg">Our Belief</h3>
+                <h3 className="text-white font-semibold text-base md:text-lg">Our Belief</h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
                 Integrity, commitment and performance — on and off the field.
