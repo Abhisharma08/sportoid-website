@@ -33,8 +33,8 @@ export function PersonCard({ name, role, bio, imageSrc }: PersonCardProps) {
         </div>
         
         <div className="flex-grow">
-          <div className="text-primary font-bold text-sm mb-1 uppercase tracking-wider">{role}</div>
-          <h3 className="text-2xl font-heading font-black text-dark mb-4 uppercase group-hover:text-primary transition-colors">{name}</h3>
+          <div className="text-primary font-semibold text-sm mb-1 uppercase tracking-wider">{role}</div>
+          <h3 className="text-2xl font-heading font-semibold text-dark mb-4 uppercase group-hover:text-primary transition-colors">{name}</h3>
           <div className="w-12 h-1 bg-gray-200 mb-6 group-hover:w-20 group-hover:bg-primary transition-all duration-300"></div>
           <div className="text-gray-600 space-y-4 text-sm leading-relaxed">
             {bio}

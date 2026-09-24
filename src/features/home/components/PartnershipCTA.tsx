@@ -43,7 +43,7 @@ export function PartnershipCTA({ data }: PartnershipCTAProps) {
 
             <FadeIn direction="up" delay={0.2}>
               <div>
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-black text-white leading-tight mb-1 sm:mb-2">
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-heading font-semibold text-white leading-tight mb-1 sm:mb-2">
                   {heading}
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm md:text-base max-w-xl">{description}</p>
@@ -55,7 +55,7 @@ export function PartnershipCTA({ data }: PartnershipCTAProps) {
           <FadeIn direction="right" delay={0.3}>
             <Link
               href={buttonLink}
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-bold uppercase tracking-wider text-xs sm:text-sm rounded-md transition-all duration-300 ease-out hover:bg-white hover:text-primary hover:scale-[1.04] hover:shadow-[0_8px_30px_rgba(255,255,255,0.2)] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto"
+              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold uppercase tracking-wider text-xs sm:text-sm rounded-md transition-all duration-300 ease-out hover:bg-white hover:text-primary hover:scale-[1.04] hover:shadow-[0_8px_30px_rgba(255,255,255,0.2)] active:scale-[0.98] whitespace-nowrap w-full sm:w-auto"
             >
               {buttonText}
             </Link>

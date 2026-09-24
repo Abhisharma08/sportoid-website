@@ -4,10 +4,10 @@ import { PortableText, PortableTextComponents } from '@portabletext/react'
 const customComponents: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
-      <h2 className="text-3xl font-heading font-bold text-dark mt-12 mb-6 border-l-4 border-primary pl-4">{children}</h2>
+      <h2 className="text-3xl font-heading font-semibold text-dark mt-12 mb-6 border-l-4 border-primary pl-4">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl font-heading font-bold text-dark mt-8 mb-4">{children}</h3>
+      <h3 className="text-2xl font-heading font-semibold text-dark mt-8 mb-4">{children}</h3>
     ),
     normal: ({ children }) => (
       <p className="text-gray-700 text-lg leading-relaxed mb-6">{children}</p>

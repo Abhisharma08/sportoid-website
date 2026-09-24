@@ -76,7 +76,7 @@ function AnimatedCounter({ target, suffix = '+', label, icon, delay = 0 }: Anima
     <div ref={counterRef} className="flex items-center gap-3 sm:gap-4">
       <div className="text-white/80 flex-shrink-0">{icon}</div>
       <div>
-        <div className="text-2xl sm:text-3xl md:text-4xl font-heading font-black text-white leading-none mb-1">
+        <div className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-white leading-none mb-1">
           <span ref={numberRef}>0{suffix}</span>
         </div>
         <div className="text-[9px] sm:text-[10px] md:text-xs text-white/80 uppercase tracking-widest font-medium">
@@ -103,18 +103,18 @@ export function WhoWeAreSection({ data }: WhoWeAreSectionProps) {
             <FadeIn direction="right" delay={0.1}>
               <div className="flex items-center gap-4 mb-5">
                 <div className="w-8 h-1 bg-primary rounded-full" />
-                <span className="font-bold text-xs sm:text-sm uppercase tracking-widest text-dark">
+                <span className="font-semibold text-xs sm:text-sm uppercase tracking-widest text-dark">
                   {tagline}
                 </span>
               </div>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-black mb-6 leading-[1.1] text-dark">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-semibold mb-6 leading-[1.1] text-dark">
                 {heading}
               </h2>
               <div className="space-y-4 text-gray-600 mb-8 md:mb-10 text-sm sm:text-base leading-relaxed whitespace-pre-line max-w-lg">
                 <p>{description}</p>
               </div>
               <Link href="/about">
-                <Button variant="outline" className="border-gray-300 font-bold tracking-widest text-xs px-8 py-3.5">
+                <Button variant="outline" className="border-gray-300 font-semibold tracking-widest text-xs px-8 py-3.5">
                   LEARN MORE
                 </Button>
               </Link>

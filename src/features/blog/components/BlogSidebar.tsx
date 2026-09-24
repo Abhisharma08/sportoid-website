@@ -21,7 +21,7 @@ export function BlogSidebar() {
 
       {/* Categories */}
       <div>
-        <h4 className="font-heading font-bold uppercase tracking-wider mb-6 pb-2 border-b-2 border-gray-100">
+        <h4 className="font-heading font-semibold uppercase tracking-wider mb-6 pb-2 border-b-2 border-gray-100">
           Categories
         </h4>
         <ul className="space-y-4">
@@ -38,25 +38,25 @@ export function BlogSidebar() {
             <span className="text-gray-400 text-sm">(14)</span>
           </li>
         </ul>
-        <button className="text-primary font-bold text-sm uppercase tracking-wider mt-6 hover:text-red-700">
+        <button className="text-primary font-semibold text-sm uppercase tracking-wider mt-6 hover:text-red-700">
           View All Categories →
         </button>
       </div>
 
       {/* Popular Posts */}
       <div>
-        <h4 className="font-heading font-bold uppercase tracking-wider mb-6 pb-2 border-b-2 border-gray-100">
+        <h4 className="font-heading font-semibold uppercase tracking-wider mb-6 pb-2 border-b-2 border-gray-100">
           Popular Posts
         </h4>
         <div className="space-y-6">
           {[1, 2, 3].map((num) => (
             <div key={num} className="flex items-center gap-4 group cursor-pointer">
-              <div className="text-2xl font-heading font-black text-gray-300 group-hover:text-primary transition-colors">
+              <div className="text-2xl font-heading font-semibold text-gray-300 group-hover:text-primary transition-colors">
                 0{num}
               </div>
               <div className="w-16 h-16 bg-gray-200 rounded flex-shrink-0"></div>
               <div>
-                <h5 className="font-bold text-sm text-dark group-hover:text-primary transition-colors leading-tight mb-1">
+                <h5 className="font-semibold text-sm text-dark group-hover:text-primary transition-colors leading-tight mb-1">
                   The Power of Sports Branding
                 </h5>
                 <div className="text-xs text-gray-500">May 10, 2024</div>
@@ -68,7 +68,7 @@ export function BlogSidebar() {
       
       {/* Newsletter */}
       <div className="bg-light p-8 rounded-lg border border-gray-100">
-        <h4 className="font-heading font-bold uppercase tracking-wider mb-4">
+        <h4 className="font-heading font-semibold uppercase tracking-wider mb-4">
           Subscribe to our newsletter
         </h4>
         <p className="text-gray-600 text-sm mb-6">

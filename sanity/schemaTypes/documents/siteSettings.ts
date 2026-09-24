@@ -114,5 +114,30 @@ export default defineType({
         defineField({ name: 'youtube', title: 'YouTube URL', type: 'url' }),
       ],
     }),
+    defineField({
+      name: 'linkedinFeedProfile',
+      title: 'LinkedIn Feed Profile URL',
+      type: 'url',
+      description:
+        'Profile linked from the "Latest on LinkedIn" homepage section. Add the posts themselves under "LinkedIn Post".',
+      initialValue: 'https://www.linkedin.com/in/nitin-khanna-5354349/',
+      group: 'social',
+    }),
+    defineField({
+      name: 'linkedinWidget',
+      title: 'LinkedIn Auto-Updating Feed (Elfsight)',
+      type: 'text',
+      rows: 3,
+      description:
+        'Paste the install code (or share link) of your Elfsight "LinkedIn Feed" widget. When set, the homepage shows this live feed instead of the individually added LinkedIn Posts. Leave empty to use the individual posts.',
+      group: 'social',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true
+          return /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32}\.elf\.site/i.test(value)
+            ? true
+            : 'Could not find an Elfsight widget ID. Paste the install code from Elfsight → Install.'
+        }),
+    }),
   ],
 })

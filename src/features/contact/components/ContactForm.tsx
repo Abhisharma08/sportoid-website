@@ -59,7 +59,7 @@ export function ContactForm() {
 
   return (
     <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm border border-gray-100">
-      <h3 className="text-2xl font-heading font-black text-dark mb-6">Send us a Message</h3>
+      <h3 className="text-2xl font-heading font-semibold text-dark mb-6">Send us a Message</h3>
       
       {isSuccess && (
         <div className="bg-green-50 text-green-800 p-4 rounded-md mb-6 border border-green-200">
@@ -76,7 +76,7 @@ export function ContactForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-bold text-gray-700 mb-2">Full Name *</label>
+            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
             <input
               id="name"
               type="text"
@@ -87,7 +87,7 @@ export function ContactForm() {
             {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>}
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">Email Address *</label>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
             <input
               id="email"
               type="email"
@@ -101,7 +101,7 @@ export function ContactForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="phone" className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
+            <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
             <input
               id="phone"
               type="tel"
@@ -111,7 +111,7 @@ export function ContactForm() {
             />
           </div>
           <div>
-            <label htmlFor="subject" className="block text-sm font-bold text-gray-700 mb-2">Subject *</label>
+            <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">Subject *</label>
             <input
               id="subject"
               type="text"
@@ -124,7 +124,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-bold text-gray-700 mb-2">Message *</label>
+          <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Message *</label>
           <textarea
             id="message"
             rows={5}

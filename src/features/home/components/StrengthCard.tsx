@@ -41,7 +41,7 @@ export function StrengthCard({ title, description, icon }: StrengthCardProps) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="glass-card p-8 sm:p-10 rounded-2xl text-center flex flex-col items-center h-full group transition-all duration-300 ease-out hover:border-primary/30 relative overflow-hidden cursor-default"
+      className="bg-white border border-gray-100 float-shadow p-8 sm:p-10 rounded-2xl text-center flex flex-col items-center h-full group transition-all duration-300 ease-out hover:border-primary/30 relative overflow-hidden cursor-default"
       style={{
         willChange: 'transform',
         transformStyle: 'preserve-3d',
@@ -56,10 +56,10 @@ export function StrengthCard({ title, description, icon }: StrengthCardProps) {
       <div className="w-20 h-20 rounded-full border-2 border-primary/40 text-primary flex items-center justify-center mb-6 flex-shrink-0 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all duration-300 ease-out group-hover:animate-pulse-glow relative z-10">
         {icon}
       </div>
-      <h3 className="text-lg sm:text-xl font-heading font-bold text-white mb-4 uppercase tracking-wide min-h-[3.5rem] flex items-center justify-center relative z-10">
+      <h3 className="text-lg sm:text-xl font-heading font-semibold text-dark mb-4 uppercase tracking-wide min-h-[3.5rem] flex items-center justify-center relative z-10">
         {title}
       </h3>
-      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed flex-grow flex items-center justify-center relative z-10">
+      <p className="text-gray-600 text-sm leading-relaxed flex-grow flex items-center justify-center relative z-10">
         {description}
       </p>
     </div>

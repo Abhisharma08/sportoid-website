@@ -28,17 +28,17 @@ export default async function NotFound() {
         <Container className="relative z-10 text-center">
           <div className="max-w-2xl mx-auto">
             {/* Top Tag */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-primary font-bold text-xs uppercase tracking-widest mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/15 border border-primary/30 text-primary font-semibold text-xs uppercase tracking-widest mb-8">
               <Compass className="w-4 h-4" />
               <span>404 - Page Not Found</span>
             </div>
 
             {/* Giant Number / Heading */}
-            <h1 className="text-7xl sm:text-9xl font-heading font-black tracking-tighter text-white/10 select-none mb-2">
+            <h1 className="text-7xl sm:text-9xl font-heading font-semibold tracking-tighter text-white/10 select-none mb-2">
               404
             </h1>
 
-            <h2 className="text-3xl sm:text-5xl font-heading font-black text-white leading-tight mb-6 -mt-10 sm:-mt-14 relative z-20">
+            <h2 className="text-3xl sm:text-5xl font-heading font-semibold text-white leading-tight mb-6 -mt-10 sm:-mt-14 relative z-20">
               OUT OF <span className="text-primary">BOUNDS.</span>
             </h2>
 

@@ -153,13 +153,13 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
                   <div className="w-16 h-12 bg-gray-200 rounded"></div>
                   <div>
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">&lt; Previous Post</div>
-                    <div className="font-bold text-sm">Building Winning Partnerships</div>
+                    <div className="font-semibold text-sm">Building Winning Partnerships</div>
                   </div>
                 </div>
                 <div className="flex gap-4 items-center text-right border-l border-gray-100 pl-4">
                   <div>
                     <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Next Post &gt;</div>
-                    <div className="font-bold text-sm">{"Kabaddi's Rise: From Roots"}</div>
+                    <div className="font-semibold text-sm">{"Kabaddi's Rise: From Roots"}</div>
                   </div>
                   <div className="w-16 h-12 bg-gray-200 rounded"></div>
                 </div>

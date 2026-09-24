@@ -14,7 +14,9 @@ export const getSiteSettingsData = async () => {
     robotsIndex,
     ogImage,
     twitterHandle,
-    socialLinks
+    socialLinks,
+    linkedinFeedProfile,
+    linkedinWidget
   }`
   try {
     return await client.fetch(query, {}, {
