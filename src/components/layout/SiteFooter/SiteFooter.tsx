@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Container } from '../../ui/Container'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { urlFor } from '@/sanity/image'
+import { withRequiredLinks } from '@/lib/navigation'
 
 export interface SiteFooterProps {
   settings?: any
@@ -16,6 +17,7 @@ const DEFAULT_QUICK_LINKS = [
   { label: 'About Us', href: '/about' },
   { label: 'People', href: '/people' },
   { label: 'Gallery', href: '/gallery' },
+  { label: 'Events', href: '/events' },
   { label: 'Contact Us', href: '/contact' },
   { label: 'Blog', href: '/blog' },
 ]
@@ -33,10 +35,11 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
     'Sportoid is a young start-up committed to the professional representation, execution and valuation of sporting properties in India.'
 
   const socials = settings?.socialLinks
-  const quickLinks =
+  const quickLinks = withRequiredLinks(
     footerSettings?.quickLinks && footerSettings.quickLinks.length > 0
       ? footerSettings.quickLinks
       : DEFAULT_QUICK_LINKS
+  )
 
   const phone = footerSettings?.contactDetails?.phone || '+91 12345 67890'
   const emailAddr = footerSettings?.contactDetails?.email || 'info@sportoid.com'
@@ -85,7 +88,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
   }
 
   return (
-    <footer className="bg-black text-white pt-16 pb-6 mt-auto">
+    <footer className="bg-dark-gray text-white pt-16 pb-6 mt-auto">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Logo & About */}
@@ -95,7 +98,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
                 {footerLogoUrl ? (
                   <img src={footerLogoUrl} alt={siteTitle} className="h-10 w-auto object-contain" />
                 ) : (
-                  <span className="font-heading font-black text-3xl tracking-tighter">
+                  <span className="font-heading font-semibold text-3xl tracking-tighter">
                     SPORT<span className="text-primary">O</span>ID
                   </span>
                 )}
@@ -175,7 +178,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-bold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
               Quick Links
             </h4>
             <ul className="space-y-3 text-sm text-white">
@@ -191,7 +194,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Get In Touch */}
           <div>
-            <h4 className="font-heading font-bold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
               Get In Touch
             </h4>
             <ul className="space-y-4 text-sm text-white">
@@ -212,7 +215,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-heading font-bold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
               {newsletterHeading}
             </h4>
             <p className="text-gray-400 text-sm mb-4 leading-relaxed">

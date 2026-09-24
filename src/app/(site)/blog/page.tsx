@@ -61,7 +61,7 @@ export default async function BlogListingPage() {
           <div className="flex flex-col lg:flex-row gap-12">
             <div className="lg:w-2/3">
               <div className="flex items-center gap-4 mb-8 border-b-2 border-gray-100 pb-2">
-                <span className="font-bold text-sm uppercase tracking-widest text-dark border-b-2 border-primary pb-2 -mb-[10px]">Latest Articles</span>
+                <span className="font-semibold text-sm uppercase tracking-widest text-dark border-b-2 border-primary pb-2 -mb-[10px]">Latest Articles</span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">

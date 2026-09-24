@@ -138,9 +138,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             )}
 
             {/* Multi-layer gradient overlays for spatial depth */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
-            <div className="absolute inset-0 bg-black/15" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           </div>
         )
       })}
@@ -152,14 +151,14 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             {activeSlides[currentIndex]?.subtitle && (
               <p
                 data-animate
-                className="glass-dark inline-block text-primary font-bold text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-3 sm:mb-5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full"
+                className="glass-dark inline-block text-primary font-semibold text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-3 sm:mb-5 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full"
               >
                 {activeSlides[currentIndex].subtitle}
               </p>
             )}
             <h1
               data-animate
-              className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-heading font-black text-white leading-[1.08] tracking-tight mb-3 sm:mb-6"
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-heading font-semibold text-white leading-[1.08] tracking-tight mb-3 sm:mb-6"
             >
               {activeSlides[currentIndex]?.title}
             </h1>
@@ -174,7 +173,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             {activeSlides[currentIndex]?.ctaText && (
               <div data-animate>
                 <Link href={activeSlides[currentIndex].ctaLink || '/about'}>
-                  <Button variant="primary" size="lg" className="font-bold tracking-wider">
+                  <Button variant="primary" size="lg" className="font-semibold tracking-wider">
                     {activeSlides[currentIndex].ctaText}
                   </Button>
                 </Link>

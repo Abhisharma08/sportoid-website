@@ -10,7 +10,7 @@ export interface ArticleMetaProps {
 export function ArticleMeta({ category, date, author, readingTime }: ArticleMetaProps) {
   return (
     <div className="flex flex-wrap items-center gap-6 py-6 border-b border-gray-100 mb-8 text-sm">
-      <div className="bg-primary text-white px-3 py-1 rounded font-bold uppercase tracking-wider text-xs">
+      <div className="bg-primary text-white px-3 py-1 rounded font-semibold uppercase tracking-wider text-xs">
         {category}
       </div>
       

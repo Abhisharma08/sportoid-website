@@ -56,6 +56,26 @@ export async function POST(req: NextRequest) {
         revalidatePath('/gallery', 'page')
         break
 
+      case 'event':
+        purgeTag('events')
+        revalidatePath('/events', 'page')
+        revalidatePath('/', 'page')
+        if (slug?.current) {
+          purgeTag(`event:${slug.current}`)
+          revalidatePath(`/events/${slug.current}`, 'page')
+        }
+        break
+
+      case 'clientLogo':
+        purgeTag('clients')
+        revalidatePath('/', 'page')
+        break
+
+      case 'linkedinPost':
+        purgeTag('linkedin-posts')
+        revalidatePath('/', 'page')
+        break
+
       case 'blogPage':
       case 'post':
       case 'postCategory':

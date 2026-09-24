@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Container } from '../../ui/Container'
 import { urlFor } from '@/sanity/image'
 import { Menu, X } from 'lucide-react'
+import { withRequiredLinks } from '@/lib/navigation'
 
 export interface SiteHeaderProps {
   settings?: any
@@ -17,6 +18,7 @@ const DEFAULT_NAV = [
   { label: 'About Us', href: '/about' },
   { label: 'People', href: '/people' },
   { label: 'Gallery', href: '/gallery' },
+  { label: 'Events', href: '/events' },
   { label: 'Contact Us', href: '/contact' },
   { label: 'Blog', href: '/blog' },
 ]
@@ -27,7 +29,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
 
   const siteTitle = settings?.siteTitle || 'SPORTOID'
   const logoUrl = settings?.logo ? urlFor(settings.logo).height(50).url() : null
-  const navItems = navigation?.items && navigation.items.length > 0 ? navigation.items : DEFAULT_NAV
+  const navItems = withRequiredLinks(navigation?.items && navigation.items.length > 0 ? navigation.items : DEFAULT_NAV)
   const ctaButton = navigation?.ctaButton
 
   const isLinkActive = (href: string) => {
@@ -57,7 +59,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
             {logoUrl ? (
               <img src={logoUrl} alt={siteTitle} className="h-9 md:h-10 w-auto object-contain" />
             ) : (
-              <span className="font-heading font-black text-2xl tracking-tighter">
+              <span className="font-heading font-semibold text-2xl tracking-tighter">
                 SPORT<span className="text-primary">O</span>ID
               </span>
             )}
@@ -75,7 +77,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider py-1"
+                  className="font-semibold text-sm hover:text-primary transition-colors text-dark uppercase tracking-wider py-1"
                 >
                   {item.label}
                 </a>
@@ -83,7 +85,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                 <Link
                   key={idx}
                   href={item.href}
-                  className={`font-bold text-sm transition-colors uppercase tracking-wider py-1 relative ${
+                  className={`font-semibold text-sm transition-colors uppercase tracking-wider py-1 relative ${
                     active ? 'text-primary' : 'text-dark hover:text-primary'
                   }`}
                 >
@@ -98,7 +100,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
             {ctaButton?.show && ctaButton?.label && (
               <Link
                 href={ctaButton.href || '/contact'}
-                className="px-5 py-2.5 bg-primary text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-red-700 transition-colors shadow-sm ml-2"
+                className="px-5 py-2.5 bg-primary text-white text-xs font-semibold uppercase tracking-wider rounded hover:bg-red-700 transition-colors shadow-sm ml-2"
               >
                 {ctaButton.label}
               </Link>
@@ -132,7 +134,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-bold text-base text-dark hover:text-primary transition-colors uppercase tracking-wider py-2.5 px-3 rounded-lg border-b border-gray-50"
+                    className="font-semibold text-base text-dark hover:text-primary transition-colors uppercase tracking-wider py-2.5 px-3 rounded-lg border-b border-gray-50"
                   >
                     {item.label}
                   </a>
@@ -141,9 +143,9 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                     key={idx}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`font-bold text-base uppercase tracking-wider py-2.5 px-3 rounded-lg transition-colors flex items-center justify-between ${
+                    className={`font-semibold text-base uppercase tracking-wider py-2.5 px-3 rounded-lg transition-colors flex items-center justify-between ${
                       active
-                        ? 'bg-primary/10 text-primary font-black'
+                        ? 'bg-primary/10 text-primary font-semibold'
                         : 'text-dark hover:text-primary hover:bg-gray-50'
                     }`}
                   >
@@ -159,7 +161,7 @@ export function SiteHeader({ settings, navigation }: SiteHeaderProps) {
                 <Link
                   href={ctaButton.href || '/contact'}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-center w-full px-5 py-3.5 bg-primary text-white text-sm font-bold uppercase tracking-wider rounded-lg hover:bg-red-700 transition-colors shadow-md"
+                  className="block text-center w-full px-5 py-3.5 bg-primary text-white text-sm font-semibold uppercase tracking-wider rounded-lg hover:bg-red-700 transition-colors shadow-md"
                 >
                   {ctaButton.label}
                 </Link>

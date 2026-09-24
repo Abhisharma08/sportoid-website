@@ -16,9 +16,9 @@ export function ArticleHeader({ title, category }: ArticleHeaderProps) {
         <div className="max-w-3xl">
           <div className="flex items-center gap-4 mb-4">
             <div className="w-8 h-1 bg-primary"></div>
-            <span className="font-bold text-sm uppercase tracking-widest text-primary">BLOG / {category}</span>
+            <span className="font-semibold text-sm uppercase tracking-widest text-primary">BLOG / {category}</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-heading font-black text-white leading-tight mb-6">
+          <h1 className="text-4xl md:text-6xl font-heading font-semibold text-white leading-tight mb-6">
             {title}
           </h1>
         </div>
