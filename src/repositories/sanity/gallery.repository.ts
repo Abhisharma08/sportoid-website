@@ -9,7 +9,15 @@ export const getGalleryItemsData = async (category?: string) => {
     _id,
     title,
     eventDate,
-    image,
+    "cover": coalesce(image, photos[0]),
+    "photos": photos[defined(asset)]{
+      _key,
+      asset,
+      hotspot,
+      crop,
+      caption,
+      alt
+    },
     "categoryTitle": category->title,
     "categorySlug": category->slug.current
   }`
