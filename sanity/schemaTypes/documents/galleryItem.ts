@@ -13,12 +13,38 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Photo',
+      title: 'Cover Photo',
       type: 'image',
+      description: 'Shown on the portfolio card. If empty, the first album photo is used.',
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'photos',
+      title: 'Album Photos',
+      type: 'array',
+      description: 'Photos shown when a visitor opens this portfolio. Drag several files in at once to bulk upload; drag to reorder.',
+      options: { layout: 'grid' },
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+            }),
+            defineField({
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              description: 'Describe the photo for screen readers. Falls back to the caption, then the portfolio title.',
+            }),
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'category',
@@ -41,7 +67,13 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'image',
+      cover: 'image',
+      firstPhoto: 'photos.0',
+      photos: 'photos',
+    },
+    prepare({ title, cover, firstPhoto, photos }) {
+      const count = Array.isArray(photos) ? photos.length : 0
+      return { title, media: cover || firstPhoto, subtitle: `${count} photo${count === 1 ? '' : 's'}` }
     },
   },
 })
