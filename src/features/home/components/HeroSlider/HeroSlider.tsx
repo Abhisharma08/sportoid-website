@@ -21,39 +21,60 @@ export interface HeroSliderProps {
   slides?: HeroSlideItem[]
 }
 
-const DEFAULT_SLIDES: HeroSlideItem[] = [
+// Hero copy lives here; Sanity slides only supply the rotating background images.
+const MESSAGE_SLIDES: HeroSlideItem[] = [
   {
-    subtitle: 'Sports Capability. Experience. Beliefs.',
-    title: "BUILDING TOMORROW'S CHAMPIONS",
+    subtitle: 'The Opportunity',
+    title: 'SPORT IS THE NEW ENGAGEMENT MEDIUM',
     description:
-      'Sportoid is a young start-up committed to the professional representation, execution and valuation of sporting properties in India.',
+      'Sport, in itself, has become one of the biggest engagement mediums for brands today - and spending on sport in India is rising sharply.',
     ctaText: 'Discover More',
     ctaLink: '/about',
   },
   {
-    subtitle: 'Global Sponsorships & Valuation',
-    title: 'PARTNERSHIPS THAT SHAPE THE GAME',
+    subtitle: 'Unbiased Advice',
+    title: 'COUNSEL FREE OF VESTED INTERESTS',
     description:
-      'Connecting top brands with premier sporting events, leagues, and athletes across India and internationally.',
-    ctaText: 'Explore Partnerships',
-    ctaLink: '/gallery',
+      'In this rapidly evolving landscape, every brand owner deserves professional, unbiased advice - free of vested interests - on which sports property or personality to partner with, or indeed, whether sport is the right fit at all.',
+    ctaText: 'Talk to Us',
+    ctaLink: '/contact',
+  },
+  {
+    subtitle: 'Two Decades of Relationships',
+    title: 'EXPERIENCE THAT OPENS DOORS',
+    description:
+      'At Sportoid, drawing on relationships built over two decades in the industry, we offer exactly that: professional counsel on the briefs and challenges brand owners face across categories.',
+    ctaText: 'Meet the Team',
+    ctaLink: '/people',
+  },
+  {
+    subtitle: 'Our Commitment',
+    title: 'RESULTS. TRANSPARENCY. NO SURPRISES.',
+    description:
+      'Our commitment is simple - deliver the results our clients ask for, with complete transparency, and no hidden surprises or costs.',
+    ctaText: 'Get in Touch',
+    ctaLink: '/contact',
   },
 ]
 
 export function HeroSlider({ slides }: HeroSliderProps) {
-  const activeSlides = slides && slides.length > 0 ? slides : DEFAULT_SLIDES
+  const images = (slides ?? []).map((slide) => slide.backgroundImage).filter(Boolean)
+  const activeSlides = MESSAGE_SLIDES.map((slide, index) => ({
+    ...slide,
+    backgroundImage: images.length > 0 ? images[index % images.length] : undefined,
+  }))
   const [currentIndex, setCurrentIndex] = React.useState(0)
   const [isPaused, setIsPaused] = React.useState(false)
   const contentRef = React.useRef<HTMLDivElement>(null)
   const slideKeyRef = React.useRef(0)
 
-  // Auto-advance slider every 6 seconds if not hovered/paused
+  // Auto-advance slider every 8 seconds (longer copy needs reading time) if not hovered/paused
   React.useEffect(() => {
     if (isPaused || activeSlides.length <= 1) return
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % activeSlides.length)
-    }, 6000)
+    }, 8000)
 
     return () => clearInterval(timer)
   }, [isPaused, activeSlides.length])
@@ -145,8 +166,9 @@ export function HeroSlider({ slides }: HeroSliderProps) {
       })}
 
       {/* Slide Content with Staggered Entrance */}
-      <div className="relative h-full flex items-center z-20" ref={contentRef}>
-        <Container className="relative px-5 sm:px-6 lg:px-8">
+      <div className="relative h-full w-full flex items-center z-20" ref={contentRef}>
+        {/* Side padding clears the prev/next arrows until the centred container's margin does (2xl) */}
+        <Container className="relative px-5 sm:px-20 md:px-24 lg:px-24 2xl:px-8">
           <div className="max-w-3xl">
             {activeSlides[currentIndex]?.subtitle && (
               <p

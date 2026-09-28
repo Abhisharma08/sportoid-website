@@ -33,7 +33,7 @@ const DUMMY_POST = {
       children: [
         {
           _type: 'span',
-          text: 'From athlete representation to event execution, data analytics to fan engagement — sports management touches every aspect of the modern game. As the industry grows, so do the opportunities for creating sustainable, long-term value.'
+          text: 'From athlete representation to event execution, data analytics to fan engagement - sports management touches every aspect of the modern game. As the industry grows, so do the opportunities for creating sustainable, long-term value.'
         }
       ]
     },

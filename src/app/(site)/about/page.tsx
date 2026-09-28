@@ -60,7 +60,7 @@ export default async function AboutPage() {
                   that is in the management of players, not brands.
                 </p>
                 <p>
-                  A void of them in — attitude matters for players and brands, available opportunities
+                  A void of them in - attitude matters for players and brands, available opportunities
                   for physical, individual sponsorship rights and adequate representation.
                 </p>
                 <p>
@@ -109,7 +109,7 @@ export default async function AboutPage() {
                 </p>
                 <p>
                   From concept to completion, our team ensures every detail is
-                  planned, executed and perfected — creating moments that
+                  planned, executed and perfected - creating moments that
                   connect brands, fans and the game.
                 </p>
               </>

@@ -72,7 +72,7 @@ export function AboutHero({ data }: AboutHeroProps) {
                 <h3 className="text-white font-semibold text-base md:text-lg">Our Belief</h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
-                Integrity, commitment and performance — on and off the field.
+                Integrity, commitment and performance - on and off the field.
               </p>
             </div>
           </div>

@@ -63,7 +63,7 @@ export default async function PeoplePage() {
                   role="Founding Partner"
                   bio={
                     <>
-                      <p>Nitin has 20 years of work experience and has been in the sports industry since 2006. With the strength of his relationships — across both clients and sportspeople, Nitin has created substantial value across the spectrum of the sports value chain.</p>
+                      <p>Nitin has 20 years of work experience and has been in the sports industry since 2006. With the strength of his relationships - across both clients and sportspeople, Nitin has created substantial value across the spectrum of the sports value chain.</p>
                       <p>He is driven in part by the idea that Indian sport has only one way forward and that is exponential growth. His mandate to himself has been to curb over exuberance in sporting values and ensure stronger foundations.</p>
                       <p>A passionate sports fan with an encyclopedic memory for events and statistics, his passion is matched by that for his personal fitness.</p>
                     </>
