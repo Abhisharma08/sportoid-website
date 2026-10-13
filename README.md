@@ -29,4 +29,4 @@ To test an already-running app: `TEST_BASE_URL=http://localhost:3000 npm test`. 
 
 See [the audit and rollout guide](docs/AUDIT.md) for the findings, Sanity webhook configuration, SEO authoring, environment variables, production verification and remaining limitations. After deployment, Sanity publication webhooks expire the content cache. A 60-second revalidation interval is the fallback for missed deliveries.
 
-New articles, events and Additional Pages receive SEO defaults and sitemap entries automatically. Add a navigation link in Studio if an Additional Page should appear in the menu. Individual documents can override their SEO fields or be excluded from search results.
+New articles, events and Additional Pages receive SEO defaults and sitemap entries automatically. Add a navigation link in Studio if an Additional Page should appear in the menu. Individual documents can override their SEO fields or be excluded from search results..
