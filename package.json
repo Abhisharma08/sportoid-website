@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "patch-package",
     "typecheck": "tsc --noEmit",
     "test": "playwright test",
     "verify:production": "node scripts/verify-production.mjs"
@@ -33,8 +32,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "@babel/core": "^8.0.1",
-    "@babel/plugin-transform-react-jsx": "^8.0.1",
     "@playwright/test": "^1.64.0",
     "@sanity/webhook": "^4.0.4",
     "@tailwindcss/postcss": "^4",
@@ -45,7 +42,6 @@
     "eslint": "^9",
     "eslint-config-next": "^16.4.0",
     "eslint-config-prettier": "^10.1.8",
-    "patch-package": "^8.0.1",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
