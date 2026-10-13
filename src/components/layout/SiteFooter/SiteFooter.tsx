@@ -1,15 +1,18 @@
 'use client'
 
+import Image from 'next/image'
+
 import * as React from 'react'
 import Link from 'next/link'
 import { Container } from '../../ui/Container'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { urlFor } from '@/sanity/image'
+import type { SiteSettings, FooterSettings } from '@/types/content'
 import { withRequiredLinks } from '@/lib/navigation'
 
 export interface SiteFooterProps {
-  settings?: any
-  footerSettings?: any
+  settings?: SiteSettings | null
+  footerSettings?: FooterSettings | null
 }
 
 const DEFAULT_QUICK_LINKS = [
@@ -51,12 +54,11 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
   const newsletterPlaceholder = footerSettings?.newsletter?.placeholder || 'Your email address'
 
   const copyright = footerSettings?.copyrightText || '© Copyright Sportoid. All rights reserved.'
-  const credits = footerSettings?.creditText || 'Designed & Developed by Original One'
 
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [feedback, setFeedback] = React.useState<{ text: string; isError?: boolean } | null>(null)
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!email) return
 
@@ -67,7 +69,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, hp_field: new FormData(e.currentTarget).get('hp_field') || '' }),
       })
 
       const data = await res.json()
@@ -79,8 +81,8 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
       setFeedback({ text: data.message || 'Thank you for subscribing!' })
       setEmail('')
       setTimeout(() => setFeedback(null), 5000)
-    } catch (err: any) {
-      setFeedback({ text: err.message || 'Subscription failed.', isError: true })
+    } catch (err) {
+      setFeedback({ text: err instanceof Error ? err.message : 'Subscription failed.', isError: true })
       setTimeout(() => setFeedback(null), 6000)
     } finally {
       setIsSubmitting(false)
@@ -96,7 +98,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
             <div className="mb-6 flex items-center">
               <Link href="/" className="flex items-center gap-3">
                 {footerLogoUrl ? (
-                  <img src={footerLogoUrl} alt={siteTitle} className="h-10 w-auto object-contain" />
+                  <Image width={200} height={60} sizes="200px" src={footerLogoUrl} alt={siteTitle} className="h-10 w-auto object-contain" />
                 ) : (
                   <span className="font-heading font-semibold text-3xl tracking-tighter">
                     SPORT<span className="text-primary">O</span>ID
@@ -178,11 +180,11 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-red-400 uppercase text-sm tracking-widest">
               Quick Links
             </h4>
             <ul className="space-y-3 text-sm text-white">
-              {quickLinks.map((link: any, idx: number) => (
+              {quickLinks.map((link, idx) => (
                 <li key={idx}>
                   <Link href={link.href} className="hover:text-primary transition-colors">
                     {link.label}
@@ -194,7 +196,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Get In Touch */}
           <div>
-            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-red-400 uppercase text-sm tracking-widest">
               Get In Touch
             </h4>
             <ul className="space-y-4 text-sm text-white">
@@ -215,14 +217,14 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-heading font-semibold mb-6 text-primary uppercase text-sm tracking-widest">
+            <h4 className="font-heading font-semibold mb-6 text-red-400 uppercase text-sm tracking-widest">
               {newsletterHeading}
             </h4>
             <p className="text-gray-400 text-sm mb-4 leading-relaxed">
               {newsletterDesc}
             </p>
             {feedback && (
-              <p
+              <p role="status"
                 className={`text-xs mt-2 ${
                   feedback.isError ? 'text-red-400' : 'text-green-400'
                 }`}
@@ -230,8 +232,14 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
                 {feedback.text}
               </p>
             )}
-            <form onSubmit={handleNewsletterSubmit} className="relative mt-4">
+            <label htmlFor="newsletter-email" className="sr-only">Email address for newsletter</label>
+            <form id="newsletter" onSubmit={handleNewsletterSubmit} className="relative mt-4">
+              <div className="hidden" aria-hidden="true"><label htmlFor="newsletter-website">Website</label><input id="newsletter-website" name="hp_field" tabIndex={-1} autoComplete="off" /></div>
               <input
+                id="newsletter-email"
+                name="email"
+                autoComplete="email"
+                maxLength={150}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -259,7 +267,7 @@ export function SiteFooter({ settings, footerSettings }: SiteFooterProps) {
           </div>
         </div>
 
-        <div className="pt-6 border-t border-gray-800 text-xs text-gray-500 flex justify-center items-center">
+        <div className="pt-6 border-t border-gray-800 text-xs text-gray-400 flex justify-center items-center">
           <p>{copyright}</p>
         </div>
       </Container>

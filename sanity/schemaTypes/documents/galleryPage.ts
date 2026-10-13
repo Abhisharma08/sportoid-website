@@ -5,6 +5,7 @@ export default defineType({
   title: 'Gallery Page Settings',
   type: 'document',
   fields: [
+    defineField({ name: 'seo', title: 'Search & Social', type: 'seo' }),
     defineField({
       name: 'title',
       title: 'Page Title',

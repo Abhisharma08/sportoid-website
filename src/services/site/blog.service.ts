@@ -1,12 +1,13 @@
+import { cache } from 'react'
 import { getPostsData, getPostBySlugData, getBlogPageData } from '../../repositories/sanity/blog.repository'
 
 export const fetchPosts = async () => {
   return await getPostsData()
 }
 
-export const fetchPostBySlug = async (slug: string) => {
+export const fetchPostBySlug = cache(async (slug: string) => {
   return await getPostBySlugData(slug)
-}
+})
 
 export const fetchBlogPage = async () => {
   return await getBlogPageData()

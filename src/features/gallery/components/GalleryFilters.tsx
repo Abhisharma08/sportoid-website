@@ -17,16 +17,15 @@ export function GalleryFilters({ categories, currentCategory, onChange }: Galler
     <div className="w-full bg-white border-b border-gray-100 py-4 md:py-6">
       <Container>
         <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
-          <span className="font-semibold text-xs md:text-sm text-dark uppercase tracking-widest">Sort Portfolio:</span>
-          <div role="tablist" aria-label="Filter portfolio by category" className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
+          <span className="font-semibold text-xs md:text-sm text-dark uppercase tracking-widest">Filter Portfolio:</span>
+          <div role="group" aria-label="Filter portfolio by category" className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
             {options.map((cat) => {
               const active = currentCategory === cat.slug
               return (
                 <button
                   key={cat.slug}
                   type="button"
-                  role="tab"
-                  aria-selected={active}
+                  aria-pressed={active}
                   onClick={() => onChange(cat.slug)}
                   className={`whitespace-nowrap font-semibold text-xs md:text-sm uppercase tracking-wider transition-all px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border cursor-pointer ${
                     active

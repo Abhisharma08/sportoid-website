@@ -1,18 +1,6 @@
 import { createClient } from 'next-sanity'
-import { apiVersion, dataset, projectId, useCdn } from './env'
+import { apiVersion, dataset, projectId } from './env'
 
-export const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn,
-})
-
-// Client with write token for server actions / API route mutations
-export const writeClient = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: false,
-  token: process.env.SANITY_API_READ_TOKEN,
-})
+// Next.js owns caching. Bypass Sanity's CDN so a webhook cannot refill our
+// freshly expired cache with an older CDN response. Never expose drafts.
+export const client = createClient({ projectId, dataset, apiVersion, useCdn: false, perspective: 'published' })

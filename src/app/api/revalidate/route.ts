@@ -1,131 +1,60 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidateTag, revalidatePath } from 'next/cache'
+import { parseBody } from 'next-sanity/webhook'
+import { timingSafeEqual } from 'node:crypto'
+import { CONTENT_TAG } from '@/sanity/cache'
+import { readLimitedText, RequestError } from '@/lib/form-request'
+import { isContentType } from '@/lib/revalidation'
 
-/**
- * Secret-protected Sanity On-Demand Revalidation Webhook
- * Configured in Sanity Project Settings -> API -> Webhooks
- * Triggered on document publish, update, or delete.
- */
+export const runtime = 'nodejs'
+
 export async function POST(req: NextRequest) {
+  const secret = process.env.SANITY_REVALIDATE_SECRET?.trim()
+  if (!secret) return NextResponse.json({ error: 'Revalidation is not configured' }, { status: 503 })
+  if (Number(req.headers.get('content-length') || 0) > 16384) {
+    return NextResponse.json({ error: 'Payload too large' }, { status: 413 })
+  }
+
   try {
-    const secret = req.nextUrl.searchParams.get('secret') || req.headers.get('x-webhook-secret')
-    const configuredSecret = process.env.SANITY_REVALIDATE_SECRET
-
-    // Ensure endpoint security
-    if (configuredSecret && secret !== configuredSecret) {
-      return NextResponse.json({ message: 'Invalid or missing revalidation secret' }, { status: 401 })
-    }
-
-    const body = await req.json().catch(() => ({}))
-    const { _type, slug } = body
-    const revalidatedTags: string[] = []
-
-    const purgeTag = (tag: string) => {
-      try {
-        revalidateTag(tag, { expire: 0 })
-        revalidatedTags.push(tag)
-      } catch (e) {
-        console.warn(`Tag revalidation skipped for ${tag}:`, e)
+    let body: { _type?: unknown; _id?: string } | null
+    if (req.headers.has('sanity-webhook-signature')) {
+      // Includes Sanity's short consistency delay before invalidating caches.
+      const raw = await readLimitedText(req)
+      const boundedRequest = new NextRequest(req.url, { method: 'POST', headers: req.headers, body: raw })
+      const parsed = await parseBody<typeof body>(boundedRequest, secret)
+      if (!parsed.isValidSignature) return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+      body = parsed.body
+    } else {
+      // Keep existing header/query-secret integrations working during migration.
+      const supplied = req.headers.get('x-webhook-secret') || req.nextUrl.searchParams.get('secret') || ''
+      const left = Buffer.from(supplied)
+      const right = Buffer.from(secret)
+      if (left.length !== right.length || !timingSafeEqual(left, right)) {
+        return NextResponse.json({ error: 'Invalid secret' }, { status: 401 })
       }
+      body = JSON.parse(await readLimitedText(req))
+      await new Promise((resolve) => setTimeout(resolve, 3000))
     }
-
-    switch (_type) {
-      case 'homePage':
-        purgeTag('home')
-        revalidatePath('/', 'page')
-        break
-
-      case 'aboutPage':
-        purgeTag('about')
-        revalidatePath('/about', 'page')
-        break
-
-      case 'peoplePage':
-      case 'person':
-        purgeTag('people')
-        purgeTag('people-page')
-        revalidatePath('/people', 'page')
-        break
-
-      case 'galleryPage':
-      case 'galleryItem':
-      case 'galleryCategory':
-        purgeTag('gallery')
-        purgeTag('gallery-categories')
-        purgeTag('gallery-page')
-        revalidatePath('/gallery', 'page')
-        break
-
-      case 'event':
-        purgeTag('events')
-        revalidatePath('/events', 'page')
-        revalidatePath('/', 'page')
-        if (slug?.current) {
-          purgeTag(`event:${slug.current}`)
-          revalidatePath(`/events/${slug.current}`, 'page')
-        }
-        break
-
-      case 'clientLogo':
-        purgeTag('clients')
-        revalidatePath('/', 'page')
-        break
-
-      case 'linkedinPost':
-        purgeTag('linkedin-posts')
-        revalidatePath('/', 'page')
-        break
-
-      case 'blogPage':
-      case 'post':
-      case 'postCategory':
-      case 'author':
-        purgeTag('posts')
-        purgeTag('blog-page')
-        revalidatePath('/blog', 'page')
-        if (slug?.current) {
-          purgeTag(`post:${slug.current}`)
-          revalidatePath(`/blog/${slug.current}`, 'page')
-        }
-        break
-
-      case 'contactPage':
-        purgeTag('contact')
-        revalidatePath('/contact', 'page')
-        break
-
-      case 'siteSettings':
-        purgeTag('site-settings')
-        revalidatePath('/', 'layout')
-        break
-
-      case 'navigation':
-        purgeTag('navigation')
-        revalidatePath('/', 'layout')
-        break
-
-      case 'footerSettings':
-        purgeTag('footer-settings')
-        revalidatePath('/', 'layout')
-        break
-
-      default:
-        purgeTag('site-settings')
-        purgeTag('home')
-        revalidatePath('/', 'page')
+    if (!body || !isContentType(body._type)) {
+      return NextResponse.json({ error: 'Unsupported document type' }, { status: 400 })
     }
-
-    return NextResponse.json({
-      revalidated: true,
-      type: _type || 'unknown',
-      tags: revalidatedTags,
-      now: Date.now(),
-    })
-  } catch (err: any) {
-    console.error('Revalidation webhook error:', err)
-    return NextResponse.json(
-      { message: 'Error during on-demand revalidation', error: err?.message },
-      { status: 500 }
-    )
+    if (body._id !== undefined && typeof body._id !== 'string') {
+      return NextResponse.json({ error: 'Invalid document ID' }, { status: 400 })
+    }
+    if (body._id?.startsWith('drafts.') || body._id?.startsWith('versions.')) {
+      return NextResponse.json({ revalidated: false, reason: 'Unpublished content' })
+    }
+    // Shared references, deleted documents and changed slugs affect more than
+    // one URL. Invalidate the small site's complete content graph atomically.
+    revalidateTag(CONTENT_TAG, { expire: 0 })
+    revalidatePath('/', 'layout')
+    revalidatePath('/sitemap.xml')
+    revalidatePath('/robots.txt')
+    return NextResponse.json({ revalidated: true, type: body._type })
+  } catch (error) {
+    if (error instanceof RequestError) return NextResponse.json({ error: error.message }, { status: error.status })
+    if (error instanceof SyntaxError) return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    console.error('Revalidation failed:', error instanceof Error ? error.message : 'Unknown error')
+    return NextResponse.json({ error: 'Revalidation failed' }, { status: 500 })
   }
 }

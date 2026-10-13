@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getClientLogosData = async () => {
@@ -10,12 +11,12 @@ export const getClientLogosData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['clients'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'clients'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (ClientLogos):', error)
-    return []
+    throw error
   }
 }

@@ -1,5 +1,4 @@
-'use client'
-
+import { safeHref } from '@/lib/urls'
 import * as React from 'react'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
@@ -20,7 +19,7 @@ export function PartnershipCTA({ data }: PartnershipCTAProps) {
   const description =
     data?.description || 'Partner with Sportoid and be a part of the growth story of Indian sport.'
   const buttonText = data?.buttonText || 'Get In Touch'
-  const buttonLink = data?.buttonLink || '/contact'
+  const buttonLink = safeHref(data?.buttonLink) || '/contact'
 
   return (
     <section className="relative bg-gradient-to-r from-primary via-red-600 to-primary overflow-hidden">

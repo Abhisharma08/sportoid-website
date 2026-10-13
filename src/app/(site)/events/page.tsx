@@ -1,3 +1,5 @@
+import { PageSchema } from '@/components/seo/PageSchema'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import * as React from 'react'
 import { CalendarX } from 'lucide-react'
 import { EventsHero } from '@/features/events/components/EventsHero'
@@ -10,6 +12,7 @@ import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
   return constructMetadata({
+    seo: (await getPageSeo('eventsPage')) || undefined,
     title: 'Upcoming Sports Events',
     description:
       'Upcoming tournaments, leagues, clinics and sporting experiences organised and managed by Sportoid across India.',
@@ -25,6 +28,7 @@ export default async function EventsPage() {
 
   return (
     <>
+      <PageSchema path="/events" title="Sports Events" contentType="eventsPage" type="CollectionPage" />
       <EventsHero />
 
       <Section variant="light">

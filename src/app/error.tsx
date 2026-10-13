@@ -34,11 +34,9 @@ export default function ErrorBoundary({
             <Button variant="primary" size="lg" onClick={() => reset()}>
               Try Again
             </Button>
-            <Link href="/">
-              <Button variant="outline" size="lg">
+            <Link href="/" className="inline-flex rounded-md border border-current px-6 py-3 font-semibold hover:text-primary">
                 Back to Home
-              </Button>
-            </Link>
+              </Link>
           </div>
         </div>
       </Container>

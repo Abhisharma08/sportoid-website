@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import * as React from 'react'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
@@ -31,9 +32,7 @@ export function ServiceSection({
     'Event Delivery': 'https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?auto=format&fit=crop&w=1200&q=80',
   }
 
-  const finalImageSrc = imageSrc?.startsWith('http') || imageSrc?.startsWith('/') && !imageSrc.endsWith('.jpg') 
-    ? imageSrc 
-    : (imageSrc && imageSrc.startsWith('http') ? imageSrc : defaultImages[category] || 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80')
+  const finalImageSrc = imageSrc || defaultImages[category] || defaultImages.Players
 
   return (
     <Section variant={variant}>
@@ -42,7 +41,7 @@ export function ServiceSection({
           <div className="w-full lg:w-1/2">
             <FadeIn direction={isLeft ? 'right' : 'left'} delay={0.1}>
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-dark shadow-xl group">
-                <img
+                <Image fill sizes="(max-width: 1024px) 100vw, 50vw"
                   src={finalImageSrc}
                   alt={`${title} - ${category}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

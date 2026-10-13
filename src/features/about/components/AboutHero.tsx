@@ -1,3 +1,4 @@
+import type { PageContent } from '@/types/content'
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 import { Target, Star, Heart } from 'lucide-react'
@@ -5,7 +6,7 @@ import { Target, Star, Heart } from 'lucide-react'
 import { urlFor } from '@/sanity/image'
 
 export interface AboutHeroProps {
-  data?: any
+  data?: PageContent | null
 }
 
 export function AboutHero({ data }: AboutHeroProps) {
@@ -27,7 +28,7 @@ export function AboutHero({ data }: AboutHeroProps) {
           style={{ backgroundImage: `url(${bgImgUrl})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[url('/about-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
+        <div className="absolute inset-0 bg-dark bg-cover bg-center md:bg-right opacity-60" />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
       
@@ -39,10 +40,7 @@ export function AboutHero({ data }: AboutHeroProps) {
               {subtitle}
             </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6">
-            PASSION <br className="hidden sm:inline" />
-            <span className="text-primary">BEYOND PLAY.</span>
-          </h1>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6 whitespace-pre-line">{heading}</h1>
           <p className="text-gray-300 max-w-xl mb-12 text-base md:text-lg leading-relaxed">
             {description}
           </p>
@@ -69,10 +67,10 @@ export function AboutHero({ data }: AboutHeroProps) {
             <div className="p-4 bg-white/5 rounded-lg border border-white/5 sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-primary border rounded-full p-2 border-primary/40 bg-primary/10"><Heart className="w-5 h-5" /></span>
-                <h3 className="text-white font-semibold text-base md:text-lg">Our Belief</h3>
+                <h3 className="text-white font-semibold text-base md:text-lg">{data?.beliefTitle || 'Our Belief'}</h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
-                Integrity, commitment and performance - on and off the field.
+                {data?.beliefDescription || 'Integrity, commitment and performance - on and off the field.'}
               </p>
             </div>
           </div>

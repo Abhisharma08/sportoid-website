@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import * as React from 'react'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowRight } from 'lucide-react'
@@ -22,12 +23,12 @@ export function EventCard({ event, isPast = false }: EventCardProps) {
 
   return (
     <Link
-      href={`/events/${event.slug}`}
+      href={`/events/${encodeURIComponent(event.slug)}`}
       className="group flex flex-col h-full bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
         {imageUrl ? (
-          <img
+          <Image fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
             src={imageUrl}
             alt={event.title}
             loading="lazy"

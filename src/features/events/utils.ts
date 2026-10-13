@@ -44,3 +44,10 @@ export const formatEventTime = (iso: string) => format(iso, { hour: 'numeric', m
 
 export const formatEventLocation = (event: Pick<EventSummary, 'venue' | 'city'>) =>
   [event.venue, event.city].filter(Boolean).join(', ')
+
+export const hasEventEnded = (event: Pick<EventSummary, 'startDate' | 'endDate'>, now = new Date()) => {
+  if (event.endDate) return new Date(event.endDate).getTime() < now.getTime()
+  const today = new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).format(now)
+  const startDay = new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(event.startDate))
+  return startDay < today
+}

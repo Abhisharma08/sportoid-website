@@ -1,90 +1,53 @@
-import * as React from 'react'
+import { PageSchema } from '@/components/seo/PageSchema'
+import Link from 'next/link'
 import { BlogHero } from '@/features/blog/components/BlogHero'
 import { BlogCard } from '@/features/blog/components/BlogCard'
 import { BlogSidebar } from '@/features/blog/components/BlogSidebar'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
-
-import { fetchPosts, fetchBlogPage } from '@/services/site/blog.service'
+import { fetchBlogPage } from '@/services/site/blog.service'
+import { getBlogListingData } from '@/repositories/sanity/blog.repository'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import { constructMetadata } from '@/lib/metadata'
-
-export async function generateMetadata() {
-  return constructMetadata({
-    title: 'Latest News & Insights',
-    description:
-      'Read industry analyses, sports business perspectives, and commercial partnership trends from Sportoid experts.',
-    canonicalPath: '/blog',
-  })
-}
-
-const FALLBACK_POSTS = [
-  {
-    slug: 'business-of-cricket',
-    title: 'The Business of Cricket: Beyond the Boundary',
-    excerpt: 'Exploring how cricket has evolved into a powerful global business driven by passion and strategy.',
-    date: 'May 12, 2024',
-    category: 'CRICKET'
-  },
-  {
-    slug: 'winning-partnerships',
-    title: 'Building Winning Partnerships in Sports',
-    excerpt: 'Why the right partnerships create more than visibility - they build lasting value.',
-    date: 'Apr 28, 2024',
-    category: 'SPONSORSHIP'
-  }
-]
-
 import { urlFor } from '@/sanity/image'
 
-export default async function BlogListingPage() {
-  const [cmsPosts, pageSettings] = await Promise.all([
-    fetchPosts(),
-    fetchBlogPage(),
-  ])
-
-  const posts = cmsPosts && cmsPosts.length > 0
-    ? cmsPosts.map((p: any) => ({
-        slug: p.slug,
-        title: p.title,
-        excerpt: p.excerpt || '',
-        imageSrc: p.mainImage ? urlFor(p.mainImage).width(800).height(500).url() : undefined,
-        date: p.publishedAt ? new Date(p.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'May 12, 2024',
-        category: (p.category || 'CRICKET').toUpperCase(),
-      }))
-    : FALLBACK_POSTS
-
-  return (
-    <>
-      <BlogHero data={pageSettings} />
-      <Section className="bg-white">
-        <Container>
-          <div className="flex flex-col lg:flex-row gap-12">
-            <div className="lg:w-2/3">
-              <div className="flex items-center gap-4 mb-8 border-b-2 border-gray-100 pb-2">
-                <span className="font-semibold text-sm uppercase tracking-widest text-dark border-b-2 border-primary pb-2 -mb-[10px]">Latest Articles</span>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                {posts.map((post: any) => (
-                  <BlogCard key={post.slug} {...post} />
-                ))}
-              </div>
-              
-              {/* Pagination placeholder */}
-              <div className="flex justify-center gap-2 mt-12">
-                <button className="px-4 py-2 border rounded text-gray-600 hover:border-primary hover:text-primary transition-colors">&lt; Prev</button>
-                <button className="px-4 py-2 border rounded bg-primary text-white border-primary">1</button>
-                <button className="px-4 py-2 border rounded text-gray-600 hover:border-primary hover:text-primary transition-colors">2</button>
-                <button className="px-4 py-2 border rounded text-gray-600 hover:border-primary hover:text-primary transition-colors">Next &gt;</button>
-              </div>
-            </div>
-            
-            <div className="lg:w-1/3">
-              <BlogSidebar />
-            </div>
+type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> }
+export async function generateMetadata({ searchParams }: Props) {
+  const params = await searchParams
+  return constructMetadata({
+    seo: (await getPageSeo('blogPage')) || undefined,
+    title: 'Latest News & Insights', description: 'Sports business perspectives, industry analysis and partnership insights from Sportoid.',
+    canonicalPath: '/blog', noIndex: !!(params.q || params.category || params.page),
+  })
+}
+export default async function BlogListingPage({ searchParams }: Props) {
+  const params = await searchParams
+  const search = typeof params.q === 'string' ? params.q.trim().slice(0, 100) : ''
+  const category = typeof params.category === 'string' ? params.category.slice(0, 100) : ''
+  const rawPage = typeof params.page === 'string' ? Number(params.page) : 1
+  const page = Number.isSafeInteger(rawPage) ? Math.min(10000, Math.max(1, rawPage)) : 1
+  const [result, settings] = await Promise.all([getBlogListingData(page, search, category), fetchBlogPage()])
+  const pageCount = Math.ceil(result.total / 9)
+  const pageUrl = (n: number) => `/blog?${new URLSearchParams({ ...(search ? { q: search } : {}), ...(category ? { category } : {}), page: String(n) })}`
+  return <>
+      <PageSchema path="/blog" title="Latest Articles" contentType="blogPage" type="CollectionPage" />
+    <BlogHero data={settings} />
+    <Section className="bg-white"><Container>
+      <div className="grid gap-12 lg:grid-cols-[2fr_1fr]">
+        <div className="min-w-0">
+          <h2 className="mb-8 font-heading text-2xl font-semibold">{search || category ? 'Search results' : 'Latest articles'}</h2>
+          <div className="grid gap-8 md:grid-cols-2">
+            {result.posts.map((post) => <BlogCard key={post._id} slug={post.slug} title={post.title} excerpt={post.excerpt || ''} category={post.category || 'Insights'} date={post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-IN', { dateStyle: 'medium', timeZone: 'Asia/Kolkata' }) : ''} imageSrc={post.mainImage ? urlFor(post.mainImage).width(800).height(500).url() : undefined} />)}
           </div>
-        </Container>
-      </Section>
-    </>
-  )
+          {result.posts.length === 0 && <p className="py-8 text-gray-600">{search || category ? 'No articles match your search.' : 'New articles will appear here when published.'}</p>}
+          {pageCount > 1 && <nav aria-label="Blog pagination" className="mt-10 flex flex-wrap items-center gap-4">
+            {page > 1 && <Link href={pageUrl(page - 1)} className="rounded border p-3">← Previous</Link>}
+            <span>Page {page} of {pageCount}</span>
+            {page < pageCount && <Link href={pageUrl(page + 1)} className="rounded border p-3">Next →</Link>}
+          </nav>}
+        </div>
+        <BlogSidebar categories={result.categories} />
+      </div>
+    </Container></Section>
+  </>
 }

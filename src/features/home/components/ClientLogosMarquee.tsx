@@ -1,3 +1,6 @@
+'use client'
+
+import Image from 'next/image'
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 import { urlFor, type SanityImageSource } from '@/sanity/image'
@@ -18,7 +21,7 @@ const MIN_LOGOS_PER_LOOP = 8
 
 function LogoItem({ client, duplicate }: { client: ClientLogo; duplicate?: boolean }) {
   const img = (
-    <img
+    <Image width={160} height={96} sizes="160px"
       src={urlFor(client.logo).height(96).url()}
       alt={duplicate ? '' : client.name}
       loading="lazy"
@@ -43,6 +46,7 @@ function LogoItem({ client, duplicate }: { client: ClientLogo; duplicate?: boole
 }
 
 export function ClientLogosMarquee({ clients }: ClientLogosMarqueeProps) {
+  const [paused, setPaused] = React.useState(false)
   // No placeholder brands: listing clients we don't have would be misleading
   if (!clients || clients.length === 0) return null
 
@@ -60,12 +64,15 @@ export function ClientLogosMarquee({ clients }: ClientLogosMarqueeProps) {
           </h2>
           <div className="w-8 h-1 bg-primary rounded-full" />
         </div>
+        <button type="button" onClick={() => setPaused((value) => !value)} className="mx-auto mb-4 block text-xs font-semibold text-gray-600 underline underline-offset-4 motion-reduce:hidden" aria-pressed={paused}>
+          {paused ? 'Play logos' : 'Pause logos'}
+        </button>
       </Container>
 
       <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <ul
           className="animate-marquee flex w-max items-center"
-          style={{ '--marquee-duration': duration } as React.CSSProperties}
+          style={{ '--marquee-duration': duration, animationPlayState: paused ? 'paused' : undefined } as React.CSSProperties}
         >
           {/* The track holds the loop twice; the identical second half makes the -50% translate seamless */}
           {[...loop, ...loop].map((client, idx) => (

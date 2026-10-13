@@ -1,7 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 
 export interface CarouselProps {
   children: React.ReactNode
@@ -20,6 +21,8 @@ export function Carousel({
 }: CarouselProps) {
   const trackRef = React.useRef<HTMLDivElement>(null)
   const [isPaused, setIsPaused] = React.useState(false)
+  const [hovered, setHovered] = React.useState(false)
+  const reducedMotion = useReducedMotion()
   const [canPrev, setCanPrev] = React.useState(false)
   const [canNext, setCanNext] = React.useState(false)
   const slides = React.Children.toArray(children)
@@ -41,11 +44,11 @@ export function Carousel({
 
     // Autoplay loops back to the start once it reaches the end
     if (direction === 1 && atEnd) {
-      track.scrollTo({ left: 0, behavior: 'smooth' })
+      track.scrollTo({ left: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
     } else {
-      track.scrollBy({ left: direction * (firstSlide.offsetWidth + gap), behavior: 'smooth' })
+      track.scrollBy({ left: direction * (firstSlide.offsetWidth + gap), behavior: reducedMotion ? 'auto' : 'smooth' })
     }
-  }, [])
+  }, [reducedMotion])
 
   React.useEffect(() => {
     updateButtons()
@@ -54,15 +57,14 @@ export function Carousel({
   }, [updateButtons, slides.length])
 
   React.useEffect(() => {
-    if (!autoplayMs || isPaused) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!autoplayMs || isPaused || hovered || reducedMotion) return
 
     const timer = setInterval(() => {
       const track = trackRef.current
       if (track && track.scrollWidth > track.clientWidth) scrollBySlide(1)
     }, autoplayMs)
     return () => clearInterval(timer)
-  }, [autoplayMs, isPaused, scrollBySlide])
+  }, [autoplayMs, isPaused, hovered, reducedMotion, scrollBySlide])
 
   const buttonClass =
     'w-10 h-10 rounded-full border border-gray-200 bg-white text-dark flex items-center justify-center shadow-sm transition-all hover:border-primary hover:text-primary disabled:opacity-40 disabled:pointer-events-none cursor-pointer'
@@ -72,10 +74,9 @@ export function Carousel({
       role="region"
       aria-roledescription="carousel"
       aria-label={ariaLabel}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onFocusCapture={() => setIsPaused(true)}
-      onBlurCapture={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
     >
       <div
@@ -98,6 +99,7 @@ export function Carousel({
 
       {(canPrev || canNext) && (
         <div className="flex justify-end gap-3 mt-8">
+          {!!autoplayMs && !reducedMotion && <button type="button" onClick={() => setIsPaused((value) => !value)} aria-label={isPaused ? "Play carousel" : "Pause carousel"} className={buttonClass}>{isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}</button>}
           <button type="button" onClick={() => scrollBySlide(-1)} disabled={!canPrev} aria-label="Previous" className={buttonClass}>
             <ChevronLeft className="w-5 h-5" />
           </button>

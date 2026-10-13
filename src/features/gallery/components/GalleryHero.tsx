@@ -1,10 +1,11 @@
+import type { PageContent } from '@/types/content'
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 
 import { urlFor } from '@/sanity/image'
 
 export interface GalleryHeroProps {
-  data?: any
+  data?: PageContent | null
 }
 
 export function GalleryHero({ data }: GalleryHeroProps) {
@@ -21,7 +22,7 @@ export function GalleryHero({ data }: GalleryHeroProps) {
           style={{ backgroundImage: `url(${bgImgUrl})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[url('/gallery-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
+        <div className="absolute inset-0 bg-dark bg-cover bg-center md:bg-right opacity-60" />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
       
@@ -31,10 +32,7 @@ export function GalleryHero({ data }: GalleryHeroProps) {
             <div className="w-8 h-1 bg-primary"></div>
             <span className="font-semibold text-xs md:text-sm uppercase tracking-widest text-primary">{subtitle}</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6">
-            GALLERY <br className="hidden sm:inline" />
-            <span className="text-primary">CELEBRATING SPORT.</span>
-          </h1>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6 whitespace-pre-line">{heading}</h1>
           <p className="text-gray-300 text-base md:text-lg leading-relaxed">
             {description}
           </p>

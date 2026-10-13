@@ -1,12 +1,13 @@
 'use client'
 
+import Image from 'next/image'
+
 import * as React from 'react'
 import Link from 'next/link'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
-import { Button } from '@/components/ui/Button'
 import { FadeIn } from '@/components/ui/FadeIn'
-import { urlFor } from '@/sanity/image'
+import { urlFor, type SanityImageSource } from '@/sanity/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -19,8 +20,8 @@ export interface WhoWeAreSectionProps {
     tagline?: string
     heading?: string
     description?: string
-    image1?: any
-    image2?: any
+    image1?: SanityImageSource
+    image2?: SanityImageSource
   }
 }
 
@@ -79,7 +80,7 @@ function AnimatedCounter({ target, suffix = '+', label, icon, delay = 0 }: Anima
         <div className="text-2xl sm:text-3xl md:text-4xl font-heading font-semibold text-white leading-none mb-1">
           <span ref={numberRef}>0{suffix}</span>
         </div>
-        <div className="text-[9px] sm:text-[10px] md:text-xs text-white/80 uppercase tracking-widest font-medium">
+        <div className="text-[9px] sm:text-[10px] md:text-xs text-white uppercase tracking-widest font-medium">
           {label}
         </div>
       </div>
@@ -113,11 +114,9 @@ export function WhoWeAreSection({ data }: WhoWeAreSectionProps) {
               <div className="space-y-4 text-gray-600 mb-8 md:mb-10 text-sm sm:text-base leading-relaxed whitespace-pre-line max-w-lg">
                 <p>{description}</p>
               </div>
-              <Link href="/about">
-                <Button variant="outline" className="border-gray-300 font-semibold tracking-widest text-xs px-8 py-3.5">
+              <Link href="/about" className="inline-flex rounded-md border border-current px-6 py-3 font-semibold hover:text-primary">
                   LEARN MORE
-                </Button>
-              </Link>
+                </Link>
             </FadeIn>
           </div>
 
@@ -131,7 +130,7 @@ export function WhoWeAreSection({ data }: WhoWeAreSectionProps) {
                 <FadeIn direction="up" delay={0.2} className="mr-8 sm:mr-16">
                   <div className="relative h-48 sm:h-64 lg:h-72 rounded-xl overflow-hidden float-shadow-lg bg-gradient-to-br from-gray-200 to-gray-300">
                     {data?.image1 ? (
-                      <img src={urlFor(data.image1).width(800).height(800).url()} alt="Sportoid 1" className="w-full h-full object-cover" />
+                      <Image fill sizes="(max-width: 768px) 70vw, 400px" src={urlFor(data.image1).width(800).height(800).url()} alt="Sportoid 1" className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <div className="absolute inset-0 dotted-grid opacity-30" />
@@ -145,7 +144,7 @@ export function WhoWeAreSection({ data }: WhoWeAreSectionProps) {
                 <FadeIn direction="up" delay={0.3} className="ml-8 sm:ml-16">
                   <div className="relative h-48 sm:h-64 lg:h-72 rounded-xl overflow-hidden float-shadow-lg bg-gradient-to-tl from-gray-300 to-gray-200">
                     {data?.image2 ? (
-                      <img src={urlFor(data.image2).width(800).height(800).url()} alt="Sportoid 2" className="w-full h-full object-cover" />
+                      <Image fill sizes="(max-width: 768px) 70vw, 400px" src={urlFor(data.image2).width(800).height(800).url()} alt="Sportoid 2" className="w-full h-full object-cover" />
                     ) : (
                       <>
                         <div className="absolute inset-0 dotted-grid opacity-30" />

@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getNavigationData = async () => {
@@ -5,13 +6,13 @@ export const getNavigationData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['navigation'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'navigation'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (Navigation):', error)
-    return null
+    throw error
   }
 }
 
@@ -20,12 +21,12 @@ export const getFooterSettingsData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['footer-settings'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'footer-settings'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (FooterSettings):', error)
-    return null
+    throw error
   }
 }

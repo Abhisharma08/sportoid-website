@@ -1,8 +1,11 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getAboutPageData = async () => {
   const query = `*[_type == "aboutPage"][0]{
     _id,
+    seo,
+    _updatedAt,
     title,
     heroSubtitle,
     heroHeading,
@@ -32,12 +35,12 @@ export const getAboutPageData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['about'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'about'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (AboutPage):', error)
-    return null
+    throw error
   }
 }

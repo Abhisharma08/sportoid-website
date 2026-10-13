@@ -1,3 +1,6 @@
+import { PageSchema } from '@/components/seo/PageSchema'
+import type { Person } from '@/types/content'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import { PeopleHero } from '@/features/people/components/PeopleHero'
 import { PersonCard } from '@/features/people/components/PersonCard'
 import { AboutStats } from '@/features/about/components/AboutStats'
@@ -8,6 +11,7 @@ import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
   return constructMetadata({
+    seo: (await getPageSeo('peoplePage')) || undefined,
     title: 'Leadership & People',
     description:
       'Meet the founding partners and leadership behind Sportoid, bringing over 30 years of sports industry and athlete management experience.',
@@ -25,15 +29,16 @@ export default async function PeoplePage() {
 
   return (
     <>
+      <PageSchema path="/people" title="Our People" contentType="peoplePage" type="CollectionPage" />
       <PeopleHero data={pageSettings} />
       <Section className="bg-light relative">
         {/* Decorative dots background */}
-        <div className="absolute top-0 left-0 right-0 h-64 bg-[url('/dots.svg')] bg-repeat opacity-50 pointer-events-none"></div>
+        <div className="absolute top-0 left-0 right-0 h-64 dotted-grid bg-repeat opacity-50 pointer-events-none"></div>
         
         <Container className="relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {peopleFromCms && peopleFromCms.length > 0 ? (
-              peopleFromCms.map((person: any) => {
+              peopleFromCms.map((person: Person) => {
                 const avatarUrl = person.avatar ? urlFor(person.avatar).width(600).height(600).url() : undefined
                 return (
                   <PersonCard

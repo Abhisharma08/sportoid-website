@@ -1,9 +1,10 @@
+import type { PageContent, SiteSettings } from '@/types/content'
 import * as React from 'react'
 import { Phone, Mail, MapPin } from 'lucide-react'
 
 export interface ContactInfoProps {
-  data?: any
-  settings?: any
+  data?: PageContent | null
+  settings?: SiteSettings | null
 }
 
 export function ContactInfo({ data, settings }: ContactInfoProps) {
@@ -18,7 +19,7 @@ export function ContactInfo({ data, settings }: ContactInfoProps) {
       <div>
         <h3 className="text-4xl font-heading font-semibold text-dark mb-8">Contact Information</h3>
         <p className="text-gray-600 mb-10 text-lg leading-relaxed">
-          Whether you're an athlete looking for representation, a brand seeking a partnership, 
+          Whether you&apos;re an athlete looking for representation, a brand seeking a partnership,
           or an organization planning an event, our team is ready to assist you.
         </p>
       </div>
@@ -30,22 +31,22 @@ export function ContactInfo({ data, settings }: ContactInfoProps) {
           </div>
           <div className="ml-6">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-1">Call Us</h4>
-            <div className="text-xl font-semibold text-dark">{phone}</div>
+            <a href={`tel:${phone.replace(/[^+0-9]/g, '')}`} className="text-xl font-semibold text-dark">{phone}</a>
             <div className="text-gray-500 text-sm mt-1">{officeHours}</div>
           </div>
         </div>
-        
+
         <div className="flex items-start">
           <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary flex-shrink-0 mt-1">
             <Mail className="w-5 h-5" />
           </div>
           <div className="ml-6">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-1">Email Us</h4>
-            <div className="text-xl font-semibold text-dark">{email}</div>
-            <div className="text-gray-500 text-sm mt-1">We'll reply within 24 hours</div>
+            <a href={`mailto:${email}`} className="break-all text-xl font-semibold text-dark">{email}</a>
+            <div className="text-gray-500 text-sm mt-1">We&apos;ll reply within 24 hours</div>
           </div>
         </div>
-        
+
         <div className="flex items-start">
           <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-primary flex-shrink-0 mt-1">
             <MapPin className="w-5 h-5" />
@@ -58,7 +59,7 @@ export function ContactInfo({ data, settings }: ContactInfoProps) {
           </div>
         </div>
       </div>
-      
+
       <div className="pt-8 border-t border-gray-200">
         <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-4">Follow Us</h4>
         <div className="flex gap-3">

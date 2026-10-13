@@ -1,3 +1,6 @@
+import page from './documents/page'
+import seo from './objects/seo'
+import eventsPage from './documents/eventsPage'
 import siteSettings from './documents/siteSettings'
 import navigation from './documents/navigation'
 import footerSettings from './documents/footerSettings'
@@ -20,6 +23,7 @@ import linkedinPost from './documents/linkedinPost'
 import clientLogo from './documents/clientLogo'
 
 export const schemaTypes = [
+  seo, eventsPage, page,
   siteSettings,
   navigation,
   footerSettings,

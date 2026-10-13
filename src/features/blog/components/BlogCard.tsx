@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import * as React from 'react'
 import Link from 'next/link'
 
@@ -24,7 +25,7 @@ export function BlogCard({ title, excerpt, date, category, slug, imageSrc }: Blo
     <FadeIn direction="up" delay={0.1}>
       <div className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col h-full group">
         <div className="relative h-64 bg-dark overflow-hidden">
-          <img
+          <Image fill sizes="(max-width: 768px) 100vw, 400px"
             src={finalImage}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -40,12 +41,12 @@ export function BlogCard({ title, excerpt, date, category, slug, imageSrc }: Blo
             {date}
           </div>
           <h3 className="text-xl font-heading font-semibold text-dark mb-3 leading-snug group-hover:text-primary transition-colors">
-            <Link href={`/blog/${slug}`}>
+            <Link href={`/blog/${encodeURIComponent(slug)}`}>
               {title}
             </Link>
           </h3>
           <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">{excerpt}</p>
-          <Link href={`/blog/${slug}`} className="text-primary font-semibold text-sm uppercase tracking-wider flex items-center hover:text-red-700 transition-colors group-hover:translate-x-1 duration-200">
+          <Link href={`/blog/${encodeURIComponent(slug)}`} className="text-primary font-semibold text-sm uppercase tracking-wider flex items-center hover:text-red-700 transition-colors group-hover:translate-x-1 duration-200">
             Read More <span className="ml-2">→</span>
           </Link>
         </div>

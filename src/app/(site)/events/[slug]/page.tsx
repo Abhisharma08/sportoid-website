@@ -1,3 +1,7 @@
+import Image from 'next/image'
+import { hasEventEnded } from '@/features/events/utils'
+import { fetchSiteSettings } from '@/services/site/settings.service'
+import { siteOrigin, safeHref } from '@/lib/urls'
 import * as React from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -24,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return constructMetadata({
+    seo: event.seo,
     title: event.title,
     description: event.summary,
     canonicalPath: `/events/${event.slug}`,
@@ -38,14 +43,16 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
   const location = formatEventLocation(event)
   const imageUrl = event.image ? urlFor(event.image).width(1600).height(800).url() : null
-  const isPast = new Date(event.endDate || event.startDate) < new Date()
+  const isPast = hasEventEnded(event)
+  const origin = siteOrigin((await fetchSiteSettings())?.canonicalUrl)
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SportsEvent',
     name: event.title,
     startDate: event.startDate,
-    endDate: event.endDate || event.startDate,
+    endDate: event.endDate || undefined,
+    url: `${origin}/events/${encodeURIComponent(event.slug)}`,
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     sport: getSportLabel(event.sport),
@@ -58,7 +65,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
           address: { '@type': 'PostalAddress', addressLocality: event.city, addressCountry: 'IN' },
         }
       : undefined,
-    organizer: { '@type': 'Organization', name: 'Sportoid' },
+    organizer: { '@id': `${origin}/#organization` },
   }
 
   const details = [
@@ -105,7 +112,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
             <div className="lg:w-2/3">
               {imageUrl && (
                 <div className="mb-10 rounded-xl overflow-hidden aspect-[2/1] shadow-md bg-gray-100">
-                  <img src={imageUrl} alt={event.title} className="w-full h-full object-cover" />
+                  <Image width={1600} height={800} sizes="(max-width: 1024px) 100vw, 800px" src={imageUrl} alt={event.title} className="w-full h-full object-cover" />
                 </div>
               )}
               {event.body ? (
@@ -120,19 +127,16 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
                 <h2 className="text-sm font-heading font-semibold text-dark tracking-widest mb-6">EVENT DETAILS</h2>
                 <dl className="space-y-5">
                   {details.map(({ icon: Icon, label, value }) => (
-                    <div key={label} className="flex gap-4">
-                      <Icon className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <dt className="text-[11px] uppercase tracking-widest text-gray-500 mb-0.5">{label}</dt>
-                        <dd className="text-sm text-dark font-medium">{value}</dd>
-                      </div>
+                    <div key={label} className="space-y-1">
+                      <dt className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-gray-500 mb-0.5"><Icon aria-hidden="true" className="h-5 w-5 text-primary" />{label}</dt>
+                      <dd className="text-sm text-dark font-medium">{value}</dd>
                     </div>
                   ))}
                 </dl>
 
                 {!isPast && event.registrationUrl && (
                   <a
-                    href={event.registrationUrl}
+                    href={safeHref(event.registrationUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-8 block text-center w-full px-6 py-3.5 bg-primary text-white text-sm font-semibold uppercase tracking-wider rounded-md hover:bg-red-700 transition-colors"

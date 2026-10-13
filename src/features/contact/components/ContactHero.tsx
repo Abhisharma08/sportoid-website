@@ -1,10 +1,11 @@
+import type { PageContent } from '@/types/content'
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 
 import { urlFor } from '@/sanity/image'
 
 export interface ContactHeroProps {
-  data?: any
+  data?: PageContent | null
 }
 
 export function ContactHero({ data }: ContactHeroProps) {
@@ -20,7 +21,7 @@ export function ContactHero({ data }: ContactHeroProps) {
           style={{ backgroundImage: `url(${bgImgUrl})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[url('/contact-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
+        <div className="absolute inset-0 bg-dark bg-cover bg-center md:bg-right opacity-60" />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
       
@@ -30,10 +31,7 @@ export function ContactHero({ data }: ContactHeroProps) {
             <div className="w-8 h-1 bg-primary"></div>
             <span className="font-semibold text-xs md:text-sm uppercase tracking-widest text-primary">Get in Touch</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6">
-            LET'S BUILD <br className="hidden sm:inline" />
-            <span className="text-primary">TOGETHER.</span>
-          </h1>
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-heading font-semibold text-white leading-tight mb-6 whitespace-pre-line">{heading}</h1>
           <p className="text-gray-300 text-base md:text-lg leading-relaxed">
             {description}
           </p>

@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { Section } from '@/components/ui/Section'
 import { Container } from '@/components/ui/Container'
 import { GalleryFilters, ALL_CATEGORIES } from './GalleryFilters'
@@ -17,7 +17,9 @@ export interface GalleryGridProps {
 
 export function GalleryGrid({ items, categories, initialCategory }: GalleryGridProps) {
   const pathname = usePathname()
-  const [category, setCategory] = React.useState(initialCategory)
+  const searchParams = useSearchParams()
+  const requested = searchParams?.get('category')?.toLowerCase() || ALL_CATEGORIES
+  const category = searchParams ? (categories.some((item) => item.slug === requested) ? requested : ALL_CATEGORIES) : initialCategory
   const [openItem, setOpenItem] = React.useState<GalleryEntry | null>(null)
   // Clicking doesn't focus buttons in every browser (e.g. Safari), so remember the opener explicitly
   const openerRef = React.useRef<HTMLButtonElement | null>(null)
@@ -34,7 +36,6 @@ export function GalleryGrid({ items, categories, initialCategory }: GalleryGridP
 
   // Filter in place and keep the URL shareable, without a navigation (which scrolls to the top)
   const changeCategory = (slug: string) => {
-    setCategory(slug)
     const url = slug === ALL_CATEGORIES ? pathname : `${pathname}?category=${encodeURIComponent(slug)}`
     window.history.replaceState(null, '', url)
   }

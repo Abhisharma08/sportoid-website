@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getSiteSettingsData = async () => {
@@ -21,12 +22,12 @@ export const getSiteSettingsData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['site-settings'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'site-settings'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (SiteSettings):', error)
-    return null
+    throw error
   }
 }

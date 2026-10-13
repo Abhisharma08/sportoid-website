@@ -1,3 +1,4 @@
+import type { PageContent } from '@/types/content'
 import * as React from 'react'
 import { Container } from '@/components/ui/Container'
 
@@ -7,7 +8,7 @@ interface BlogHeroProps {
   title?: string
   subtitle?: string
   breadcrumbs?: string
-  data?: any
+  data?: PageContent | null
 }
 
 export function BlogHero({ 
@@ -29,7 +30,7 @@ export function BlogHero({
           style={{ backgroundImage: `url(${bgImgUrl})` }}
         />
       ) : (
-        <div className="absolute inset-0 bg-[url('/blog-hero-bg.jpg')] bg-cover bg-center md:bg-right opacity-60" />
+        <div className="absolute inset-0 bg-dark bg-cover bg-center md:bg-right opacity-60" />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
       

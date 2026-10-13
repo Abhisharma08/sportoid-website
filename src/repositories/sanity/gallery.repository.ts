@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getGalleryItemsData = async (category?: string) => {
@@ -25,13 +26,13 @@ export const getGalleryItemsData = async (category?: string) => {
   try {
     return await client.fetch(query, { category: category?.toLowerCase() }, {
       next: {
-        tags: ['gallery'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'gallery'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (GalleryItems):', error)
-    return []
+    throw error
   }
 }
 
@@ -40,13 +41,13 @@ export const getGalleryCategoriesData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['gallery-categories'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'gallery-categories'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (GalleryCategories):', error)
-    return []
+    throw error
   }
 }
 
@@ -55,12 +56,12 @@ export const getGalleryPageData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['gallery-page'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'gallery-page'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (GalleryPage):', error)
-    return null
+    throw error
   }
 }

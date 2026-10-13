@@ -1,85 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
-import { writeClient } from '@/sanity/client'
-import { checkRateLimit } from '@/lib/rateLimit'
-
-const newsletterSchema = z.object({
-  email: z.string().email('Please enter a valid email address').max(150, 'Email address is too long'),
-  hp_field: z.string().optional(),
-})
+import { ZodError } from 'zod'
+import { getWriteClient } from '@/sanity/write-client'
+import { checkRateLimit, privateId } from '@/lib/rateLimit'
+import { newsletterSchema } from '@/lib/form-validation'
+import { readFormBody, RequestError } from '@/lib/form-request'
 
 export async function POST(req: NextRequest) {
   try {
-    // 1. IP-based Rate Limiting (5 subscriptions per 24 hours)
-    const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'anonymous-ip'
-    const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000
-    const rateLimit = checkRateLimit(`newsletter-${ip}`, 5, TWENTY_FOUR_HOURS_MS)
-
-    if (!rateLimit.success) {
-      const remainingHours = Math.ceil(rateLimit.resetInSeconds / 3600)
-      return NextResponse.json(
-        {
-          error: `Daily subscription limit reached (5 attempts per 24 hours). Please try again in ${
-            remainingHours > 1 ? `${remainingHours} hours` : `${Math.ceil(rateLimit.resetInSeconds / 60)} minutes`
-          }.`,
-        },
-        {
-          status: 429,
-          headers: {
-            'Retry-After': rateLimit.resetInSeconds.toString(),
-          },
-        }
-      )
-    }
-
-    // 2. Validate input
-    const body = await req.json()
-    const { email, hp_field } = newsletterSchema.parse(body)
-
-    // Honeypot bot protection
-    if (hp_field && hp_field.trim().length > 0) {
-      return NextResponse.json({ success: true, message: 'Thank you for subscribing!' }, { status: 200 })
-    }
-
-    // 3. Prevent duplicate subscriptions by checking Sanity
-    const existing = await writeClient.fetch(
-      `*[_type == "newsletterSubscriber" && email == $email][0]`,
-      { email }
-    )
-
-    if (existing) {
-      return NextResponse.json(
-        { message: 'You are already subscribed to our newsletter!' },
-        { status: 200 }
-      )
-    }
-
-    // 4. Create new subscriber
-    await writeClient.create({
-      _type: 'newsletterSubscriber',
-      email,
-      subscribedAt: new Date().toISOString(),
-      status: 'subscribed',
+    const { email, hp_field } = newsletterSchema.parse(await readFormBody(req))
+    if (hp_field) return NextResponse.json({ message: 'Thank you for subscribing!' })
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown'
+    const limit = await checkRateLimit(`newsletter:${ip}`)
+    if (!limit.success) return NextResponse.json({ error: 'Subscription limit reached. Please try again later.' }, { status: 429, headers: { 'Retry-After': String(limit.resetInSeconds) } })
+    const client = getWriteClient()
+    // Normalize email and use a deterministic opaque private ID to prevent
+    // duplicate subscriptions even when requests arrive concurrently.
+    const existing = await client.fetch<string | null>(`*[_type == "newsletterSubscriber" && lower(email) == $email][0]._id`, { email }, { cache: 'no-store' })
+    if (!existing) await client.createIfNotExists({
+      _id: privateId('newsletter', email), _type: 'newsletterSubscriber', email,
+      subscribedAt: new Date().toISOString(), status: 'subscribed',
     })
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Thank you for subscribing to our newsletter!',
-      },
-      { status: 201 }
-    )
-  } catch (error: any) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: error.issues[0]?.message || 'Invalid email address' },
-        { status: 400 }
-      )
-    }
-    console.error('Newsletter subscription error:', error)
-    return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again later.' },
-      { status: 500 }
-    )
+    if (existing) await client.patch(existing).set({ status: 'subscribed' }).commit()
+    // Uniform response avoids revealing whether a particular email is stored.
+    return NextResponse.json({ success: true, message: 'Thank you for subscribing!' })
+  } catch (error) {
+    if (error instanceof RequestError) return NextResponse.json({ error: error.message }, { status: error.status })
+    if (error instanceof ZodError) return NextResponse.json({ error: error.issues[0]?.message || 'Invalid email address' }, { status: 400 })
+    console.error('Newsletter subscription failed')
+    return NextResponse.json({ error: 'Unable to subscribe. Please try again later.' }, { status: 503 })
   }
 }

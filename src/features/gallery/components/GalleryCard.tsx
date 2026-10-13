@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import * as React from 'react'
 
 import { Images } from 'lucide-react'
@@ -36,7 +37,7 @@ export function GalleryCard({ title, year, imageSrc, photoCount = 0, onOpen }: G
           />
         )}
         <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden border border-gray-100 mb-6 bg-dark/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-500 relative">
-          <img src={finalImage} alt={title} className="w-full h-full object-cover" />
+          <Image fill sizes="192px" src={finalImage} alt={title} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
           {photoCount > 0 && (
             <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 bg-black/70 text-white text-[11px] font-medium px-2 py-1 rounded-full">

@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import type { GalleryPhoto } from '../types'
 
@@ -14,9 +15,16 @@ const SWIPE_THRESHOLD_PX = 50
 
 export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps) {
   const [index, setIndex] = React.useState(0)
+  const dialogRef = React.useRef<HTMLDialogElement>(null)
   const closeButtonRef = React.useRef<HTMLButtonElement>(null)
   const thumbsRef = React.useRef<HTMLDivElement>(null)
   const touchStartX = React.useRef<number | null>(null)
+
+  const closeDialog = React.useCallback(() => {
+    // End modal inertness before the parent restores focus to its opener.
+    dialogRef.current?.close()
+    onClose()
+  }, [onClose])
 
   const count = photos.length
   const photo = photos[index]
@@ -26,17 +34,19 @@ export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps
   React.useEffect(() => {
     const { overflow } = document.body.style
     document.body.style.overflow = 'hidden'
+    const dialog = dialogRef.current
+    dialog?.showModal()
     closeButtonRef.current?.focus()
 
     return () => {
+      dialog?.close()
       document.body.style.overflow = overflow
     }
   }, [])
 
   React.useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-      else if (e.key === 'ArrowRight') goTo(index + 1)
+      if (e.key === 'ArrowRight') goTo(index + 1)
       else if (e.key === 'ArrowLeft') goTo(index - 1)
     }
     window.addEventListener('keydown', onKeyDown)
@@ -71,12 +81,13 @@ export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps
     'absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-primary text-white flex items-center justify-center transition-colors cursor-pointer'
 
   return (
-    <div
-      role="dialog"
+    <dialog
+      ref={dialogRef}
+      onCancel={(event) => { event.preventDefault(); closeDialog() }}
       aria-modal="true"
       aria-label={`${title} photo gallery`}
-      className="fixed inset-0 z-[100] bg-black flex flex-col"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      className="fixed inset-0 z-[100] m-0 h-dvh max-h-none w-screen max-w-none border-0 p-0 bg-black text-white flex flex-col"
+      onClick={(e) => e.target === e.currentTarget && closeDialog()}
     >
       {/* Top bar */}
       <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-4 text-white">
@@ -89,7 +100,7 @@ export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps
         <button
           ref={closeButtonRef}
           type="button"
-          onClick={onClose}
+          onClick={closeDialog}
           aria-label="Close gallery"
           className="w-10 h-10 flex-shrink-0 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-colors cursor-pointer"
         >
@@ -100,11 +111,11 @@ export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps
       {/* Main photo */}
       <div
         className="relative flex-1 min-h-0 flex items-center justify-center px-4 sm:px-20"
-        onClick={(e) => e.target === e.currentTarget && onClose()}
+        onClick={(e) => e.target === e.currentTarget && closeDialog()}
         onTouchStart={(e) => (touchStartX.current = e.touches[0].clientX)}
         onTouchEnd={onTouchEnd}
       >
-        <img
+        <Image width={1800} height={1400} sizes="100vw"
           key={photo.key}
           src={photo.src}
           alt={photo.alt}
@@ -143,11 +154,11 @@ export function GalleryLightbox({ title, photos, onClose }: GalleryLightboxProps
                 i === index ? 'border-primary opacity-100' : 'border-transparent opacity-50 hover:opacity-90'
               }`}
             >
-              <img src={thumb.thumb} alt="" loading="lazy" className="w-full h-full object-cover" />
+              <Image width={160} height={120} sizes="80px" src={thumb.thumb} alt="" loading="lazy" className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
       )}
-    </div>
+    </dialog>
   )
 }

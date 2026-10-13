@@ -9,7 +9,7 @@ export interface ArticleHeaderProps {
 export function ArticleHeader({ title, category }: ArticleHeaderProps) {
   return (
     <div className="relative w-full py-24 md:py-32 bg-dark overflow-hidden flex items-center">
-      <div className="absolute inset-0 bg-[url('/blog-single-bg.jpg')] bg-cover bg-right opacity-40 mix-blend-overlay"></div>
+      <div className="absolute inset-0 dotted-grid bg-cover bg-right opacity-40 mix-blend-overlay"></div>
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 to-transparent"></div>
       
       <Container className="relative z-10">

@@ -6,6 +6,7 @@ export default defineType({
   title: 'Event',
   type: 'document',
   fields: [
+    defineField({ name: 'seo', title: 'Search & Social', type: 'seo' }),
     defineField({
       name: 'title',
       title: 'Event Name',

@@ -1,3 +1,5 @@
+import { PageSchema } from '@/components/seo/PageSchema'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import * as React from 'react'
 import { ContactHero } from '@/features/contact/components/ContactHero'
 import { ContactForm } from '@/features/contact/components/ContactForm'
@@ -11,6 +13,7 @@ import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
   return constructMetadata({
+    seo: (await getPageSeo('contactPage')) || undefined,
     title: 'Contact Us',
     description:
       'Get in touch with the Sportoid team for athlete representation, tournament rights management, and sports marketing inquiries.',
@@ -26,10 +29,11 @@ export default async function ContactPage() {
 
   return (
     <>
+      <PageSchema path="/contact" title="Contact Us" contentType="contactPage" type="ContactPage" />
       <ContactHero data={contactData} />
       <Section className="bg-light relative overflow-hidden">
         {/* Decorative background element */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-[url('/dots.svg')] bg-repeat opacity-50 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-1/3 h-full dotted-grid bg-repeat opacity-50 pointer-events-none"></div>
         
         <Container className="relative z-10">
           <div className="flex flex-col lg:flex-row gap-16">
@@ -47,7 +51,7 @@ export default async function ContactPage() {
       <div className="w-full h-[450px] bg-dark relative overflow-hidden">
         <iframe
           title="Sportoid Office Location"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.1160982357!2d72.74109995709657!3d19.08219783958221!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          src={`https://www.google.com/maps?q=${encodeURIComponent(contactData?.address || "Mumbai, India")}&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -65,7 +69,7 @@ export default async function ContactPage() {
           </div>
           <h4 className="font-heading font-semibold text-lg text-dark mb-1">Sportoid Management</h4>
           <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-            Mumbai, Maharashtra, India
+            {contactData?.address || "Mumbai, Maharashtra, India"}
           </p>
         </div>
       </div>

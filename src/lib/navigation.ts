@@ -1,3 +1,4 @@
+import { safeHref } from './urls'
 export interface NavLink {
   label: string
   href: string
@@ -16,7 +17,7 @@ const REQUIRED_LINKS: Array<{ link: NavLink; after: string }> = [
 const normalise = (href: string) => href.replace(/\/+$/, '') || '/'
 
 export function withRequiredLinks<T extends NavLink>(links: T[]): T[] {
-  const result = [...links]
+  const result = links.filter((link) => typeof link.label === 'string' && !!safeHref(link.href))
   for (const { link, after } of REQUIRED_LINKS) {
     if (result.some((item) => normalise(item.href) === link.href)) continue
     const anchor = result.findIndex((item) => normalise(item.href) === after)

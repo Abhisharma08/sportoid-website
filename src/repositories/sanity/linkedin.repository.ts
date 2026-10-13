@@ -1,3 +1,4 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getLinkedInPostsData = async (limit = 3) => {
@@ -9,12 +10,12 @@ export const getLinkedInPostsData = async (limit = 3) => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['linkedin-posts'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'linkedin-posts'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (LinkedInPosts):', error)
-    return []
+    throw error
   }
 }

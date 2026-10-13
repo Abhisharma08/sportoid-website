@@ -1,3 +1,6 @@
+import { PageSchema } from '@/components/seo/PageSchema'
+import { constructMetadata } from '@/lib/metadata'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import { fetchHomePage } from '@/services/site/home.service'
 import { fetchUpcomingEvents } from '@/services/site/events.service'
 import { fetchLinkedInEmbeds, toElfsightWidgetId } from '@/services/site/linkedin.service'
@@ -13,6 +16,10 @@ import { PartnershipCTA } from '@/features/home/components/PartnershipCTA'
 
 const DEFAULT_LINKEDIN_PROFILE = 'https://www.linkedin.com/in/nitin-khanna-5354349/'
 
+export async function generateMetadata() {
+  return constructMetadata({ canonicalPath: '/', seo: (await getPageSeo('homePage')) || undefined })
+}
+
 export default async function HomePage() {
   const [homeData, upcomingEvents, linkedinPosts, settings, clientLogos] = await Promise.all([
     fetchHomePage(),
@@ -24,16 +31,17 @@ export default async function HomePage() {
 
   return (
     <>
+      <PageSchema path="/" title="Home" contentType="homePage" type="WebPage" />
       <HeroSlider slides={homeData?.heroSlides} />
-      <WhoWeAreSection data={homeData?.whoWeAre} />
       <ClientLogosMarquee clients={clientLogos} />
-      <StrengthsSection strengths={homeData?.strengths} />
-      <UpcomingEventsSection events={upcomingEvents} />
+      <WhoWeAreSection data={homeData?.whoWeAre} />
       <LinkedInFeedSection
         posts={linkedinPosts}
         profileUrl={settings?.linkedinFeedProfile || DEFAULT_LINKEDIN_PROFILE}
         widgetId={toElfsightWidgetId(settings?.linkedinWidget)}
       />
+      <StrengthsSection strengths={homeData?.strengths} />
+      <UpcomingEventsSection events={upcomingEvents} />
       <PartnershipCTA data={homeData?.partnershipCta} />
     </>
   )

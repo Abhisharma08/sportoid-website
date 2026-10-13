@@ -1,12 +1,10 @@
-import * as React from 'react'
 import Link from 'next/link'
 import { Container } from '@/components/ui/Container'
-import { Button } from '@/components/ui/Button'
 import { SiteHeader } from '@/components/layout/SiteHeader'
 import { SiteFooter } from '@/components/layout/SiteFooter'
 import { fetchSiteSettings } from '@/services/site/settings.service'
 import { fetchNavigation, fetchFooterSettings } from '@/services/site/navigation.service'
-import { Compass, ArrowLeft, Home, MessageSquare } from 'lucide-react'
+import { Compass, Home, MessageSquare } from 'lucide-react'
 
 export default async function NotFound() {
   const [settings, navigation, footerSettings] = await Promise.all([
@@ -43,23 +41,19 @@ export default async function NotFound() {
             </h2>
 
             <p className="text-gray-300 text-base sm:text-lg mb-10 max-w-lg mx-auto leading-relaxed">
-              The page you are looking for doesn't exist, has been removed, or is temporarily unavailable in the Sportoid playbook.
+              The page you are looking for doesn&apos;t exist, has been removed, or is temporarily unavailable in the Sportoid playbook.
             </p>
 
             {/* Navigation Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/">
-                <Button variant="primary" size="lg" className="w-full sm:w-auto flex items-center justify-center gap-2">
+              <Link href="/" className="inline-flex rounded-md border border-current px-6 py-3 font-semibold hover:text-primary">
                   <Home className="w-4 h-4" />
                   <span>Back to Homepage</span>
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto flex items-center justify-center gap-2 border-white/30 text-white hover:bg-white/10">
+                </Link>
+              <Link href="/contact" className="inline-flex rounded-md border border-current px-6 py-3 font-semibold hover:text-primary">
                   <MessageSquare className="w-4 h-4" />
                   <span>Contact Support</span>
-                </Button>
-              </Link>
+                </Link>
             </div>
           </div>
         </Container>

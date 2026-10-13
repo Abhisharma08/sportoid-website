@@ -2,11 +2,14 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || '.next',
+  typescript: { tsconfigPath: process.env.NEXT_DIST_DIR ? 'tsconfig.audit.json' : 'tsconfig.json' },
   poweredByHeader: false, // Prevent X-Powered-By header leakage
   compress: true, // Enable gzip and brotli compression
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
       {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
@@ -18,6 +21,7 @@ const nextConfig: NextConfig = {
       {
         source: '/:path*',
         headers: [
+          { key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'self'" },
           {
             key: 'X-DNS-Prefetch-Control',
             value: 'on',

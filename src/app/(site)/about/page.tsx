@@ -1,3 +1,6 @@
+import { PageSchema } from '@/components/seo/PageSchema'
+import type { Service } from '@/types/content'
+import { getPageSeo } from '@/repositories/sanity/seo.repository'
 import { AboutHero } from '@/features/about/components/AboutHero'
 import { ServiceSection } from '@/features/about/components/ServiceSection'
 import { AboutStats } from '@/features/about/components/AboutStats'
@@ -7,6 +10,7 @@ import { constructMetadata } from '@/lib/metadata'
 
 export async function generateMetadata() {
   return constructMetadata({
+    seo: (await getPageSeo('aboutPage')) || undefined,
     title: 'About Us',
     description:
       'Learn about Sportoid, our mission, vision, and leadership team delivering elite sports management, athlete representation, and commercial partnerships across India.',
@@ -22,9 +26,10 @@ export default async function AboutPage() {
 
   return (
     <>
+      <PageSchema path="/about" title="About Us" contentType="aboutPage" type="AboutPage" />
       <AboutHero data={data} />
       {cmsServices && cmsServices.length > 0 ? (
-        cmsServices.map((svc: any, idx: number) => {
+        cmsServices.map((svc: Service, idx: number) => {
           const imgUrl = svc.image ? urlFor(svc.image).width(1200).height(900).url() : undefined
           return (
             <ServiceSection
@@ -55,7 +60,7 @@ export default async function AboutPage() {
             description={
               <>
                 <p>
-                  Having entered the industry to manage the commercial interest of India's biggest
+                  Having entered the industry to manage the commercial interest of India&apos;s biggest
                   personal sports brand in cricket and tennis, we at Sportoid soon realised the growing vacuum
                   that is in the management of players, not brands.
                 </p>
@@ -64,7 +69,7 @@ export default async function AboutPage() {
                   for physical, individual sponsorship rights and adequate representation.
                 </p>
                 <p>
-                  We're not just representing players currently, we advise players and brand owners
+                  We&apos;re not just representing players currently, we advise players and brand owners
                   on long-term commercial valuation and athlete brand identity.
                 </p>
               </>
@@ -104,7 +109,7 @@ export default async function AboutPage() {
             description={
               <>
                 <p>
-                  Whether it's a live stadium tournament, corporate cricket championship, or fan engagement arena, we
+                  Whether it&apos;s a live stadium tournament, corporate cricket championship, or fan engagement arena, we
                   craft experiences that leave a lasting impression.
                 </p>
                 <p>
@@ -117,7 +122,7 @@ export default async function AboutPage() {
           />
         </>
       )}
-      <AboutStats />
+      <AboutStats stats={data?.stats} />
     </>
   )
 }

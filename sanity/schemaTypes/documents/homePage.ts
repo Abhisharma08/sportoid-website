@@ -5,6 +5,7 @@ export default defineType({
   title: 'Home Page',
   type: 'document',
   fields: [
+    defineField({ name: 'seo', title: 'Search & Social', type: 'seo' }),
     defineField({
       name: 'title',
       title: 'Page Title',

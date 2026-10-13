@@ -1,8 +1,11 @@
+import { CONTENT_REVALIDATE_SECONDS, CONTENT_TAG } from '@/sanity/cache'
 import { client } from '../../sanity/client'
 
 export const getHomePageData = async () => {
   const query = `*[_type == "homePage"][0]{
     _id,
+    seo,
+    _updatedAt,
     title,
     heroSlides[]{
       _key,
@@ -36,12 +39,12 @@ export const getHomePageData = async () => {
   try {
     return await client.fetch(query, {}, {
       next: {
-        tags: ['home'],
-        revalidate: 3600,
+        tags: [CONTENT_TAG, 'home'],
+        revalidate: CONTENT_REVALIDATE_SECONDS,
       },
     })
   } catch (error) {
     console.error('Sanity fetch error (homePage):', error)
-    return null
+    throw error
   }
 }
