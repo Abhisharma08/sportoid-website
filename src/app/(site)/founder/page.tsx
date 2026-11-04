@@ -20,7 +20,7 @@ export async function generateMetadata() {
     title: 'Our Founder',
     description:
       'Meet Nitin Khanna, Founding Partner of Sportoid, in sports marketing since 2006 across sponsorship, athlete management, property valuation and event management.',
-    canonicalPath: '/people',
+    canonicalPath: '/founder',
   })
 }
 
@@ -42,7 +42,7 @@ export default async function PeoplePage() {
 
   return (
     <>
-      <PageSchema path="/people" title="Our Founder" contentType="peoplePage" type="CollectionPage" />
+      <PageSchema path="/founder" title="Our Founder" contentType="peoplePage" type="CollectionPage" />
       <PeopleHero data={pageSettings} />
       <Section className="bg-light relative">
         {/* Decorative dots background */}

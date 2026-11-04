@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    // The People page became the Founder page.
+    { source: '/people', destination: '/founder', permanent: true },
+  ],
   headers: async () => {
     return [
       {

@@ -47,7 +47,7 @@ const MESSAGE_SLIDES: HeroSlideItem[] = [
     description:
       'At Sportoid, drawing on relationships built over two decades in the industry, we offer exactly that: professional counsel on the briefs and challenges brand owners face across categories.',
     ctaText: 'Meet the Founder',
-    ctaLink: '/people',
+    ctaLink: '/founder',
   },
   {
     subtitle: 'Our Commitment',

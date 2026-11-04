@@ -5,7 +5,7 @@ import { httpUrl, siteOrigin } from '@/lib/urls'
 
 export const revalidate = 60
 const routes: Record<string, string> = {
-  homePage: '/', aboutPage: '/about', peoplePage: '/people', galleryPage: '/gallery',
+  homePage: '/', aboutPage: '/about', peoplePage: '/founder', galleryPage: '/gallery',
   eventsPage: '/events', blogPage: '/blog', contactPage: '/contact',
 }
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

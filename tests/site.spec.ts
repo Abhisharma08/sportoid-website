@@ -5,7 +5,7 @@ import { contactSchema, newsletterSchema } from '../src/lib/form-validation'
 import { hasEventEnded } from '../src/features/events/utils'
 import { isContentType } from '../src/lib/revalidation'
 
-const routes = ['/', '/about', '/people', '/gallery', '/events', '/blog', '/contact']
+const routes = ['/', '/about', '/founder', '/gallery', '/events', '/blog', '/contact']
 test('URL, input and event boundary regressions', () => {
   for (const input of ['javascript:alert(1)', '//attacker.test', '/\\attacker', 'data:text/html,x']) expect(safeHref(input)).toBeUndefined()
   expect(safeHref('/about')).toBe('/about')
