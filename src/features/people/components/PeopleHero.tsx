@@ -9,9 +9,9 @@ export interface PeopleHeroProps {
 }
 
 export function PeopleHero({ data }: PeopleHeroProps) {
-  const subtitle = data?.heroSubtitle || 'Our Leaders'
-  const heading = data?.heroHeading || 'THE PEOPLE\nBEHIND SPORTOID'
-  const description = data?.heroDescription || 'Meet the visionaries driving our passion for sport and building lasting impact.'
+  const subtitle = data?.heroSubtitle || 'Our Founder'
+  const heading = data?.heroHeading || 'THE FOUNDER\nBEHIND SPORTOID'
+  const description = data?.heroDescription || 'Two decades of sports marketing, from managing Sachin Tendulkar to building partnerships across the ICC, IPL and beyond.'
   const bgImgUrl = data?.heroBackgroundImage ? urlFor(data.heroBackgroundImage).width(1920).height(1080).url() : null
 
   return (

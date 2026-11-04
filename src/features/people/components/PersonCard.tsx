@@ -6,11 +6,13 @@ export interface PersonCardProps {
   role: string
   bio: React.ReactNode
   imageSrc?: string
+  align?: 'left' | 'center'
 }
 
 import { FadeIn } from '@/components/ui/FadeIn'
 
-export function PersonCard({ name, role, bio, imageSrc }: PersonCardProps) {
+export function PersonCard({ name, role, bio, imageSrc, align = 'left' }: PersonCardProps) {
+  const centered = align === 'center'
   return (
     <FadeIn direction="up" delay={0.15}>
       <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 flex flex-col h-full group">
@@ -26,11 +28,11 @@ export function PersonCard({ name, role, bio, imageSrc }: PersonCardProps) {
           </div>
         </div>
         
-        <div className="flex-grow">
+        <div className={`flex-grow ${centered ? 'text-center' : ''}`}>
           <div className="text-primary font-semibold text-sm mb-1 uppercase tracking-wider">{role}</div>
           <h3 className="text-2xl font-heading font-semibold text-dark mb-4 uppercase group-hover:text-primary transition-colors">{name}</h3>
-          <div className="w-12 h-1 bg-gray-200 mb-6 group-hover:w-20 group-hover:bg-primary transition-all duration-300"></div>
-          <div className="text-gray-600 space-y-4 text-sm leading-relaxed">
+          <div className={`w-12 h-1 bg-gray-200 mb-6 ${centered ? 'mx-auto' : ''} group-hover:w-20 group-hover:bg-primary transition-all duration-300`}></div>
+          <div className={`text-gray-600 space-y-4 leading-relaxed ${centered ? 'text-base md:text-lg' : 'text-sm'}`}>
             {bio}
           </div>
         </div>

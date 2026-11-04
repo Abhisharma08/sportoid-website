@@ -20,7 +20,7 @@ export interface SiteHeaderProps {
 const DEFAULT_NAV: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
-  { label: 'People', href: '/people' },
+  { label: 'Founder', href: '/people' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Events', href: '/events' },
   { label: 'Contact Us', href: '/contact' },

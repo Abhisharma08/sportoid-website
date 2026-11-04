@@ -9,7 +9,7 @@ export const getPeopleData = async () => {
     name,
     role,
     bio,
-    avatar,
+    "avatar": coalesce(avatar, image),
     order
   }`
   try {
