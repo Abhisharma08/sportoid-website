@@ -13,6 +13,7 @@ export interface PageContent {
   visionTitle?: string; visionDescription?: string
   beliefTitle?: string; beliefDescription?: string
   phone?: string; email?: string; address?: string; officeHours?: string
+  showMap?: boolean
 }
 export interface SiteSettings {
   siteTitle?: string; metaDescription?: string

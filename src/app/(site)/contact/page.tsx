@@ -47,32 +47,34 @@ export default async function ContactPage() {
         </Container>
       </Section>
       
-      {/* Map Section */}
-      <div className="w-full h-[450px] bg-dark relative overflow-hidden">
-        <iframe
-          title="Sportoid Office Location"
-          src={`https://www.google.com/maps?q=${encodeURIComponent(contactData?.address || "Mumbai, India")}&output=embed`}
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="w-full h-full grayscale contrast-125 opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
-        />
+      {/* Map Section: shown unless switched off in the CMS */}
+      {contactData?.showMap !== false && (
+        <div className="w-full h-[450px] bg-dark relative overflow-hidden">
+          <iframe
+            title="Sportoid Office Location"
+            src={`https://www.google.com/maps?q=${encodeURIComponent(contactData?.address || "Mumbai, India")}&output=embed`}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen={false}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full h-full grayscale contrast-125 opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+          />
         
-        {/* Floating Headquarters Info Card */}
-        <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 z-10 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-gray-100 max-w-xs sm:max-w-sm">
-          <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-widest mb-1.5">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span>Headquarters</span>
+          {/* Floating Headquarters Info Card */}
+          <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 z-10 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-gray-100 max-w-xs sm:max-w-sm">
+            <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-widest mb-1.5">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span>Headquarters</span>
+            </div>
+            <h4 className="font-heading font-semibold text-lg text-dark mb-1">Sportoid Management</h4>
+            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+              {contactData?.address || "Mumbai, Maharashtra, India"}
+            </p>
           </div>
-          <h4 className="font-heading font-semibold text-lg text-dark mb-1">Sportoid Management</h4>
-          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-            {contactData?.address || "Mumbai, Maharashtra, India"}
-          </p>
         </div>
-      </div>
+      )}
     </>
   )
 }

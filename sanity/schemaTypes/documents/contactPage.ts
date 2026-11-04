@@ -56,5 +56,12 @@ export default defineType({
       type: 'string',
       initialValue: 'Mon-Fri, 9am - 6pm IST',
     }),
+    defineField({
+      name: 'showMap',
+      title: 'Show Map',
+      type: 'boolean',
+      description: 'Show the Google Map of the office address at the bottom of the Contact page.',
+      initialValue: true,
+    }),
   ],
 })

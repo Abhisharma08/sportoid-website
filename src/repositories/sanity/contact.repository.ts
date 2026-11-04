@@ -13,7 +13,8 @@ export const getContactPageData = async () => {
     phone,
     email,
     address,
-    officeHours
+    officeHours,
+    showMap
   }`
   try {
     return await client.fetch(query, {}, {
